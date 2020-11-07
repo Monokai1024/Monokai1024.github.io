@@ -1,392 +1,938 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
 <head>
-  <meta charset="utf-8">
-  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="John Doe">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="John Doe">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>fi3ework&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
 
-  
-  <title>C++&amp;UE4</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="C++&amp;UE4">
-<meta property="og:url" content="http://example.com/page/2/index.html">
-<meta property="og:site_name" content="C++&amp;UE4">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="C++&amp;UE4" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+    body {
+        margin: 0;
+    }
 
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
 <meta name="generator" content="Hexo 5.2.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">C++&amp;UE4</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
+    
+        <body class="home-body">
+    
+    
+<header class="header index-header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <a class="home-link" href=/>Monokai的博客</a>
 </header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-UE4-C-获取场景里的后期盒子" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/10/20/UE4-C-%E8%8E%B7%E5%8F%96%E5%9C%BA%E6%99%AF%E9%87%8C%E7%9A%84%E5%90%8E%E6%9C%9F%E7%9B%92%E5%AD%90/" class="article-date">
-  <time datetime="2019-10-20T13:00:49.000Z" itemprop="datePublished">2019-10-20</time>
-</a>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
     
-  </div>
-  <div class="article-inner">
+    <!-- 主页  -->
     
     
-      <header class="article-header">
+    <!-- 文章页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/ChMkJ1lkKL-IH2ZMABAUa1NetkgAAeWIAHxLhYAEBSD720.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Monokai的博客
+            <!-- 文章页  -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+                玉不琢，不成器
+            
+            <!-- 文章页  -->
+            
+        </p>
+        <!-- 文章页meta -->
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/20/UE4-C-%E8%8E%B7%E5%8F%96%E5%9C%BA%E6%99%AF%E9%87%8C%E7%9A%84%E5%90%8E%E6%9C%9F%E7%9B%92%E5%AD%90/">[UE4]C++获取场景里的后期盒子</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APostProcessVolume *postProcess = <span class="keyword">static_cast</span>&lt;APostProcessVolume*&gt;(GetWorld()-&gt;PostProcessVolumes[<span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
-
-<p><code>GetWorld()-&gt;PostProcessVolumes[0]</code>是按照<code>World Outliner</code>列表自上往下的顺序获取.  </p>
-<p>我在场景里只放了一个后期盒子,那么当然索引就是第0个.</p>
-<p>但是要注意, 如果要修改其中某一项参数,那么在后期盒子面板里那一项参数前面打勾!</p>
-<p>然后在代码里这样写,这里我以<code>VignetteIntensity</code>为例:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postProcess-&gt;Settings.VignetteIntensity = <span class="number">1.f</span>;</span><br></pre></td></tr></table></figure>
-
-<p>所以<code>VignetteIntensity</code>这一项要在后期盒子面板上勾选起来,不然上述代码不起作用.</p>
-
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/10/20/UE4-C-%E8%8E%B7%E5%8F%96%E5%9C%BA%E6%99%AF%E9%87%8C%E7%9A%84%E5%90%8E%E6%9C%9F%E7%9B%92%E5%AD%90/" data-id="ckh7jzktn0008ucl5bm5jcng8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
 
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
 
-  
-    <article id="post-UE4-根据枚举值获取字符串" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/10/13/UE4-%E6%A0%B9%E6%8D%AE%E6%9E%9A%E4%B8%BE%E5%80%BC%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="article-date">
-  <time datetime="2019-10-13T13:38:20.000Z" itemprop="datePublished">2019-10-13</time>
-</a>
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main index-page">
     
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/13/UE4-%E6%A0%B9%E6%8D%AE%E6%9E%9A%E4%B8%BE%E5%80%BC%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/">[UE4]根据枚举值获取字符串(反过来获取也可以)</a>
-    </h1>
-  
-
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>根据枚举值获取字符串。前提是这个枚举写了<code>UENUM()</code>的宏，原理是利用反射机制。</p>
-<p><strong>枚举定义：</strong></p>
-<p><strong>实现方式如下：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">TEunm</span>&gt;</span></span><br><span class="line"><span class="function">FString <span class="title">MyClass::GetEnumValueAsString</span><span class="params">(<span class="keyword">const</span> FString &amp;name, <span class="keyword">const</span> TEnum &amp;value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">const</span> UEnum *enumPtr = FindObejct&lt;UEnum&gt;(ANY_PACKAGE,*name,<span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">if</span>(enumPtr)</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="keyword">return</span> enumPtr-&gt;GetNameStringByIndex((int32)value);	<span class="comment">//把value转换成int32类型(枚举是可以转换为int类型的) 	</span></span><br><span class="line">    &#125;<span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//没找到</span></span><br><span class="line">        <span class="keyword">return</span> FString(<span class="string">&quot;NULL&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/20/UE4-C-%E8%8E%B7%E5%8F%96%E5%9C%BA%E6%99%AF%E9%87%8C%E7%9A%84%E5%90%8E%E6%9C%9F%E7%9B%92%E5%AD%90/" >
+            
+                <span>[UE4]C++获取场景里的后期盒子</span>
+        </a>
+        <div class="abstract-content">
+            1APostProcessVolume *postProcess = static_cast&lt;APostProcessVolume*&gt;(GetWorld()-&gt;PostProcessVolumes[0]);
 
-
-
-<p><strong>调用：</strong><code>GetEnumValueAsString(FString(&quot;MyEnum&quot;),MyEnum::ONE);</code></p>
-<p>返回的值就是 ONE 的字符串(FString类型)</p>
-<hr>
-<p>然后是字符串转换为枚举值</p>
-<p><strong>实现方式：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">TEnum</span>&gt;</span></span><br><span class="line"><span class="function">TEnum <span class="title">MyClass::GetEnumValueFromString</span><span class="params">(<span class="keyword">const</span> FString &amp;name,<span class="keyword">const</span> FString &amp;value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> Uenum enumPtr = FindObject&lt;Uenum&gt;(ANY_PACKAGE, *name, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">if</span>(enumPtr)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//把返回的int类型的值转换为TEnum类型</span></span><br><span class="line">        <span class="keyword">return</span> (TEnum)enumPtr-&gt;GetIndexByName(FName(*FString(value)));</span><br><span class="line">    &#125;<span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//没找到</span></span><br><span class="line">        <span class="keyword">return</span> TEnum(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>调用：</strong><code>GetEnumValueFromString(FString(&quot;MyEnum&quot;),FString(&quot;ONE&quot;));</code></p>
-
-      
+GetWorld()-&gt;PostProcessVolumes[0]是按照World Outliner列表自上往下的顺序获取.  
+我在场景里只放了一个后期盒子,那么当然索引就是第0个.
+但是要注意, 如果要修改其中某一项参数,那么在后期盒子面板里那一项参数前面打勾!
+然后在代码里这样写,这里我以VignetteIntensity为例:
+1postProces...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/20</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/13/UE4-%E6%A0%B9%E6%8D%AE%E6%9E%9A%E4%B8%BE%E5%80%BC%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" >
+            
+                <span>[UE4]根据枚举值获取字符串(反过来获取也可以)</span>
+        </a>
+        <div class="abstract-content">
+            根据枚举值获取字符串。前提是这个枚举写了UENUM()的宏，原理是利用反射机制。
+枚举定义：
+实现方式如下：
+12345678910111213template&lt;class TEunm&gt;FString MyClass::GetEnumValueAsString(const FString &amp;name, const TEnum &amp;value)&#123;	const UEnum *enumPtr = FindObejct&lt;UEnum&gt;(ANY_PACKAGE,*name,true);    if(enumPtr)    &#123;    	retu...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/13</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/12/UE4-%E5%86%99%E5%85%A5Json%E6%96%87%E4%BB%B6/" >
+            
+                <span>[UE4]写入Json文件</span>
+        </a>
+        <div class="abstract-content">
+            在UE4里面写Json，然后保存到本地txt文件中。一共分为三步：
+1.写json格式的数据
+2.把这些Json格式的数据转换为字符串，保存到FString变量中
+3.把转换好的字符串保存到本地文件中
+实现过程如下：
+写json数据的函数：
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859void MyJsonHandle::UpdateRecordData(FString culture,float musicVolu...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/12</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/10/UE4-%E8%AF%BB%E5%8F%96Json%E6%96%87%E4%BB%B6/" >
+            
+                <span>[UE4]读取Json文件</span>
+        </a>
+        <div class="abstract-content">
+            UE4读取Json文件还是比较方便的。
+Json文件内容如下：
+12345678910111213141516171819202122232425262728//当前所有内容都是保存于数组中[    //每一笔数据都用花括号包起来	&#123;		&quot;Culture&quot;: &quot;ZH&quot;	&#125;,	&#123;		&quot;MusicVolume&quot;: 0.3	&#125;,	&#123;		&quot;SoundVolume&quot;: 0.3	&#125;,	    &#123;     		&quot;RecordData&quot;...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/10</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/">&amp;#60; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
+    
+</main>
+            <!-- profile -->
+            
+            <div class="profile">
+    <img class="profile-avatar" alt="avatar" src= /avatar/1.JPG >
+    <div class="profile-name">Monokai</div>
+    
+    <div class="profile-signature">
+        Tech otakus save the world!
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/10/13/UE4-%E6%A0%B9%E6%8D%AE%E6%9E%9A%E4%B8%BE%E5%80%BC%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" data-id="ckh7jzktr000cucl50ogmajvg" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-UE4-写入Json文件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/10/12/UE4-%E5%86%99%E5%85%A5Json%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2019-10-12T10:34:37.000Z" itemprop="datePublished">2019-10-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
+    <div class="profile-social">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/12/UE4-%E5%86%99%E5%85%A5Json%E6%96%87%E4%BB%B6/">[UE4]写入Json文件</a>
-    </h1>
-  
-
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在UE4里面写Json，然后保存到本地txt文件中。一共分为三步：</p>
-<p>1.写json格式的数据</p>
-<p>2.把这些Json格式的数据转换为字符串，保存到<code>FString</code>变量中</p>
-<p>3.把转换好的字符串保存到本地文件中</p>
-<p><strong>实现过程如下：</strong></p>
-<p>写json数据的函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MyJsonHandle::UpdateRecordData</span><span class="params">(FString culture,<span class="keyword">float</span> musicVolume,<span class="keyword">float</span> soundVolume,TArray&lt;FString&gt; *recordDataList)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//开始写Json格式的数据		</span></span><br><span class="line">    <span class="comment">//因为和读取数据是对应的，所以Key的值一定要一致</span></span><br><span class="line">    TSharedPtr&lt;FJsonObject&gt; cultureObject = MakeShareable(<span class="keyword">new</span> FJsonObject);</span><br><span class="line">    cultureObject-&gt;SetStringField(<span class="string">&quot;Culture&quot;</span>,culture);	<span class="comment">//key是“Culture”，value是传进来的参数culture</span></span><br><span class="line">    TSharedPtr&lt;FJsonValueObject&gt; cultureValue = MakeShareable(<span class="keyword">new</span> FJsonValueObject(cultureObject));</span><br><span class="line">    </span><br><span class="line">    TSharedPtr&lt;FJsonObject&gt; musicObject = MakeShareable(<span class="keyword">new</span> FJsonObject);</span><br><span class="line">    musicObject-&gt;SetNumField(<span class="string">&quot;MusicVolume&quot;</span>,musicVolume);</span><br><span class="line">    TSharedPtr&lt;FJsonValueObject&gt; musicValue = MakeShareable(<span class="keyword">new</span> FJsonValueObject(musicObject));</span><br><span class="line">    </span><br><span class="line">    TSharedPtr&lt;FJsonObject&gt; soundObject = MakeShareable(<span class="keyword">new</span> FJsonObject);</span><br><span class="line">    musicObject-&gt;SetNumField(<span class="string">&quot;MusicVolume&quot;</span>,soundVolume);</span><br><span class="line">    TSharedPtr&lt;FJsonValueObject&gt; musicValue = MakeShareable(<span class="keyword">new</span> FJsonValueObject(soundObject));</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//数组类型的json数据</span></span><br><span class="line">    TArray&lt;SharedPtr&lt;FJsonValue&gt;&gt; recordDataArray;</span><br><span class="line">    </span><br><span class="line">   	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; recordDataList.Num(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">    	TSharedPtr&lt;FJsonObject&gt; recordItem = MakeShareable(<span class="keyword">new</span> FJSonObject);</span><br><span class="line">        recordItem-&gt;SetStringField(FString::FromInt(i), (*recordDataList)[i]); 	<span class="comment">//通过索引</span></span><br><span class="line">        TSharedPtr&lt;FJsonValueObject&gt; recordDataValue = </span><br><span class="line">            MakeShareable(<span class="keyword">new</span> FJsonValueObject(recordItem));</span><br><span class="line">        recordDataArray.Add(recordDataValue);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//将这个数组统一转换为FJsonValueObject</span></span><br><span class="line">    TSharedPtr&lt;FJsonObject&gt; recordDataObject = MakeShareable(<span class="keyword">new</span> FJsonObject);</span><br><span class="line">    recordDataObject-&gt;SetArrayField(<span class="string">&quot;RecordData&quot;</span>,recordDataArray);</span><br><span class="line">    TSharedPtr&lt;FJsonValueObject&gt; recordDataValue = </span><br><span class="line">        MakeShareable(<span class="keyword">new</span> FJsonValueObject(recordDataObject));</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//把所有写好的Json数据都保存到一个数组中</span></span><br><span class="line">    TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt; baseDataArray; </span><br><span class="line">    baseDataArray.Add(cultureValue);</span><br><span class="line">	baseDataArray.Add(musicVolumeValue);</span><br><span class="line">	baseDataArray.Add(soundVolumeValue);</span><br><span class="line">	baseDataArray.Add(recordDataValue);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//再次转换为FJsonObject类型，因为要转换为字符串才能保存到本地</span></span><br><span class="line">    TSharedPtr&lt;FJsonObject&gt; jsonObject = MakeShareable(<span class="keyword">new</span> FJsonObject);</span><br><span class="line">    jsonObject-&gt;SetArrayField(<span class="string">&quot;T&quot;</span>,baseDataArray);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//将这些数据转换为FString字符串</span></span><br><span class="line">    FString jsonStr;</span><br><span class="line">    GetFStringInJsonData(JsonObject,jsonStr);		<span class="comment">//这个函数实现细节写在下面</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//取掉多余的字符</span></span><br><span class="line">	jsonStr.RemoveAt(<span class="number">0</span>, <span class="number">8</span>);</span><br><span class="line">	jsonStr.RemoveFromEnd(FString(<span class="string">&quot;&#125;&quot;</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//最后写入本地		//实际上就把以前所有的数据覆盖了</span></span><br><span class="line">    WriteFileWithJsonData(jsonStr,RelativePath,RecordDataFileName);	<span class="comment">//参数2是文件路径，参数3是文件名</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
 
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//把Json写到FString中</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MyJsonHandle::GetFStringInJsonData</span><span class="params">(<span class="keyword">const</span> TSharedPtr&lt;FJsonObject&gt;&amp; jsonObj, FString&amp; jsonStr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(jsonObj.IsValid() &amp;&amp; jsonObject-&gt;Values.Num() &gt; <span class="number">0</span>)		<span class="comment">//容错判断</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//让jsonStr支持json写入操作</span></span><br><span class="line">        TSharedPtr&lt;TJsonWriter&lt;TCHAR&gt;&gt; jsonWrite = TJsonWriterFactory&lt;TCHAR&gt;::Creat(&amp;jsonStr);</span><br><span class="line">        <span class="comment">//写入FString</span></span><br><span class="line">        FJsonSerializer::Serialize(jsonObj.ToSharedRef(), jsonWrite);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后是写入本地操作</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MyJsonHandle::WriteFileWithJsonData</span><span class="params">(<span class="keyword">const</span> FString&amp; jsonStr, <span class="keyword">const</span> FString&amp; relaPath, </span></span></span><br><span class="line"><span class="function"><span class="params"><span class="keyword">const</span> FString&amp; fileName)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FString absoPath = FPaths::GameContentDir() + relaPath + fileName;	<span class="comment">//文件路径</span></span><br><span class="line">    <span class="keyword">if</span> (FFileHelper::SaveStringToFile(jsonStr, *absoPath))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//成功</span></span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//转换失败可以输出提示</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>总结：只有FJsonObject指针支持Json数据的创建，然后要转换为FJsonValueObject类型，最后就可以放到FJsonValue的数组中了。</p>
-<p>最后将保存着所有数据的FJsonValue数组保存到FJsonObject类型的指针中，进行写入本地。</p>
-
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/10/12/UE4-%E5%86%99%E5%85%A5Json%E6%96%87%E4%BB%B6/" data-id="ckh7jzktp000aucl55c4d9dav" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-UE4-读取Json文件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/10/10/UE4-%E8%AF%BB%E5%8F%96Json%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2019-10-10T13:28:49.000Z" itemprop="datePublished">2019-10-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
+        <div class="friends">
+            <div>FRIENDS</div>
+            
+                
+            
+                
+            
+                
+            
+        </div>
+    
+    
+</div>
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/10/UE4-%E8%AF%BB%E5%8F%96Json%E6%96%87%E4%BB%B6/">[UE4]读取Json文件</a>
-    </h1>
-  
-
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>UE4读取Json文件还是比较方便的。</p>
-<p>Json文件内容如下：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当前所有内容都是保存于数组中</span></span><br><span class="line">[</span><br><span class="line">    <span class="comment">//每一笔数据都用花括号包起来</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="attr">&quot;Culture&quot;</span>: <span class="string">&quot;ZH&quot;</span></span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="attr">&quot;MusicVolume&quot;</span>: <span class="number">0.3</span></span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="attr">&quot;SoundVolume&quot;</span>: <span class="number">0.3</span></span><br><span class="line">	&#125;,</span><br><span class="line">	    &#123;</span><br><span class="line">     		<span class="attr">&quot;RecordData&quot;</span>: </span><br><span class="line">     		[	<span class="comment">//表示数组</span></span><br><span class="line">      			&#123;</span><br><span class="line">           	   		<span class="attr">&quot;0&quot;</span>: <span class="string">&quot;Default&quot;</span>		<span class="comment">//“key” : &quot;value&quot;</span></span><br><span class="line">         		&#125;,</span><br><span class="line">         	 	&#123;</span><br><span class="line">          	   		<span class="attr">&quot;1&quot;</span>: <span class="string">&quot;Record01&quot;</span></span><br><span class="line">         	 	&#125;,</span><br><span class="line">          	 	&#123;</span><br><span class="line">                	<span class="attr">&quot;2&quot;</span>: <span class="string">&quot;Record02&quot;</span></span><br><span class="line">         		&#125;</span><br><span class="line">       		]</span><br><span class="line">		&#125;</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
 
-
-
-<p>在UE4中创建一个普通C++文件，起名为<code>MyJsonHandle</code></p>
-<p>保留构造函数，删除析构函数。</p>
-<p><strong>定义两个私有成员：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//存档文件名</span></span><br><span class="line">FString RecordDataFileName;</span><br><span class="line"></span><br><span class="line"><span class="comment">//相对路径</span></span><br><span class="line">FString RelativePath;</span><br></pre></td></tr></table></figure>
-
-
-<p><strong>在.cpp文件的构造函数中初始化</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyJsonHandle::MyJsonHandle()</span><br><span class="line">&#123;</span><br><span class="line">	recordDataFileName = FString(<span class="string">&quot;RecordData.json&quot;</span>);</span><br><span class="line"></span><br><span class="line">	relativePath = FString(<span class="string">&quot;Res/ConfigData/&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>recordDataFileName保存的是目标Json的名字，后缀名也要写上</p>
-<p>relativePath保存的是这个Json文件的路径，Content下自行创建Res，还有ConfigData(文件夹名字随意)</p>
-</blockquote>
-<blockquote>
-<p>以下步骤省略声明，只写定义部分</p>
-</blockquote>
-<p><strong>先定义一个函数，用于把json文件转换成字符串**</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MyJsonHandle::LoadStringFromFile</span><span class="params">(<span class="keyword">const</span> FString&amp; fileName, <span class="keyword">const</span> FString&amp; relaPath, FString&amp; resultString)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    FString absoPath = FPaths::GameContentDir() + relaPath + fileName;</span><br><span class="line">    <span class="keyword">if</span>(FPaths::FileExists(absoPath))	<span class="comment">//如果能找到这个文件</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//然后把找到的文件内容加载到FString里</span></span><br><span class="line">        FFileHelper::LoadFileToString(resultString,*absoPath);	</span><br><span class="line">    &#125;<span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//输出错误提示</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>说明：<code>FPaths::GameContentDir()</code>就是Content的路径，然后 <code>+</code>后来我们创建的文件夹路径 <code>+</code> json文件名(字符串拼接)</p>
-<p>实际上只要是Txt文本文件都可以保存到FString变量中</p>
-</blockquote>
-<p><strong>定义一个读取Json的函数，供外界调用，也能提高灵活性</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//参数声明为引用是要直接改变参数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MyJsonHandle::RecordDataJsonRead</span><span class="params">(FString&amp; culture, <span class="keyword">float</span>&amp; musicVolume, </span></span></span><br><span class="line"><span class="function"><span class="params"><span class="keyword">float</span>&amp; soundVolume, TArray&lt;FString&gt;&amp; recordDataList)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FString jsonValue;    </span><br><span class="line">    <span class="comment">//这个函数就把路径下的Json文件读取到了 jsonValue中</span></span><br><span class="line">    LoadStringFromFile(RecordDataFileName,RelativePath,jsonValue);</span><br><span class="line">          </span><br><span class="line">    <span class="comment">//把读取到的Json字符串转换为Json指针</span></span><br><span class="line">	TSharedRef&lt;TJsonReader&lt;TCHAR&gt;&gt; jsonReader = TJsonReaderFactory&lt;TCHAR&gt;::Create(jsonValue);	</span><br><span class="line">    </span><br><span class="line">    TArray&lt;TSharedPtr&lt;FJsonValue&gt;&gt; jsonParsed;	<span class="comment">//用于保存解析出来的Json数据</span></span><br><span class="line">    <span class="keyword">if</span>(FJsonSerializer::Deserialize(jsonReader,jsonParsed))		<span class="comment">//把解析出来的内容(现在还是个指针)保存到数组中(因为所有Json数据都保存在一个数组中)	返回值为bool类型，true代表解析成功</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//以下部分在下面说明</span></span><br><span class="line">        culture = jsonParsed[<span class="number">0</span>]-&gt;AsObject()-&gt;GetStringField(FString(<span class="string">&quot;Culture&quot;</span>));</span><br><span class="line">        musicVolume = jsonParsed[<span class="number">1</span>]-&gt;AsObject()-&gt;GetNumberField(FString(<span class="string">&quot;MusicVolume&quot;</span>));</span><br><span class="line">        soundVolume = jsonParsed[<span class="number">2</span>]-&gt;AsObject()-&gt;GetNumberField(FString(<span class="string">&quot;SoundVolume&quot;</span>));</span><br><span class="line">       </span><br><span class="line">        TArray&lt;TSharePtr&lt;FJsonValue&gt;&gt; dataArray = jsonParsed[<span class="number">3</span>]-&gt;AsObject()-&gt;GetArrayField(FString(<span class="string">&quot;RecordData&quot;</span>));</span><br><span class="line">       </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; dataArray.Num(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            FString temp = </span><br><span class="line">                dataArrray[i]-&gt;AsObject()-&gt;GetStringField(FString::FromInt(i));</span><br><span class="line">            dataArray.Add(temp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">     	<span class="comment">//解析失败的话可以打印一些错误提示   </span></span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>说明：jsonParsed数组已经保存了Json文件中的数据，保存于FJsonvalue类型中。然后把它转换成我们想要的类型。数组索引是json花括号的索引。GetStringField是获取string类型的数据，GetNumberField是获取浮点类型。参数的 FString(“Culture”) 就是索引对应的数据名称。</p>
-<p>​    对于Array类型的数据，先提取成TArray&lt;TSharePtr<FJsonValue>&gt;类型，然后用for循环依次获取为FString类型，然后添加到另一个TArray<FString>类型的数组中。</p>
-<p>​    以上都是实际改变了参数(Pass by <em>reference</em>)。</p>
-</blockquote>
-
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/10/10/UE4-%E8%AF%BB%E5%8F%96Json%E6%96%87%E4%BB%B6/" data-id="ckh7jzkts000ducl5com8a4ad" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
     </div>
-  </div>
-
-
-  
+    <!-- 不蒜子  -->
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/09/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/">[C++]类成员函数指针</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/12/C-Initialization/">[C++] Initialization</a>
-          </li>
-        
-          <li>
-            <a href="/2020/02/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/">[C++]头文件的作用(4)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/">[C++]链接器(Linker)是如何工作的(3)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/">[C++]#include和#define到底干了什么(2)</a>
-          </li>
-        
-      </ul>
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
     </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+    
 </footer>
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+    <!-- toc -->
     
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 14
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/12</span><a class="archive-post-title" href= "/2020/09/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" >[C++]类成员函数指针</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/C-Initialization/" >[C++] Initialization</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/03</span><a class="archive-post-title" href= "/2020/02/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/" >[C++]头文件的作用(4)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" >[C++]链接器(Linker)是如何工作的(3)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/23</span><a class="archive-post-title" href= "/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" >[C++]#include和#define到底干了什么(2)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/18</span><a class="archive-post-title" href= "/2020/01/18/C-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" >C++是如何工作的(1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/15</span><a class="archive-post-title" href= "/2020/01/15/OpenGL-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" >[OpenGL] 环境配置</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2019/11/24/UE4-C-%E8%8E%B7%E5%8F%96%E8%A7%92%E8%89%B2%E5%8A%A8%E7%94%BB%E7%8A%B6%E6%80%81%E6%9C%BA/" >[UE4]C++获取角色动画状态机</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2019/11/14/UE4-%E5%B0%84%E7%BA%BF%E6%A3%80%E6%B5%8B/" >[UE4]射线检测与绘制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2019/10/20/C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" >[C++]智能指针</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2019/10/20/UE4-C-%E8%8E%B7%E5%8F%96%E5%9C%BA%E6%99%AF%E9%87%8C%E7%9A%84%E5%90%8E%E6%9C%9F%E7%9B%92%E5%AD%90/" >[UE4]C++获取场景里的后期盒子</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2019/10/13/UE4-%E6%A0%B9%E6%8D%AE%E6%9E%9A%E4%B8%BE%E5%80%BC%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" >[UE4]根据枚举值获取字符串(反过来获取也可以)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2019/10/12/UE4-%E5%86%99%E5%85%A5Json%E6%96%87%E4%BB%B6/" >[UE4]写入Json文件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2019/10/10/UE4-%E8%AF%BB%E5%8F%96Json%E6%96%87%E4%BB%B6/" >[UE4]读取Json文件</a>
+        </li>
+    
+    </div>
   </div>
-</body>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "John Doe"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+     
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/Bronya.model.json"},"display":{"superSample":2,"width":450,"height":900,"position":"left","hOffset":-100,"vOffset":-200},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"tagMode":false});</script></body>
 </html>
+
+

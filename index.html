@@ -1,982 +1,1111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
 <head>
-  <meta charset="utf-8">
-  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="John Doe">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="John Doe">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>fi3ework&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
 
-  
-  <title>C++&amp;UE4</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="C++&amp;UE4">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="C++&amp;UE4">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="C++&amp;UE4" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+    body {
+        margin: 0;
+    }
 
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
 <meta name="generator" content="Hexo 5.2.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">C++&amp;UE4</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
+    
+        <body class="home-body">
+    
+    
+<header class="header index-header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <a class="home-link" href=/>Monokai的博客</a>
 </header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-C-类成员函数指针" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" class="article-date">
-  <time datetime="2020-09-12T13:04:03.000Z" itemprop="datePublished">2020-09-12</time>
-</a>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
     
-  </div>
-  <div class="article-inner">
+    <!-- 主页  -->
     
     
-      <header class="article-header">
+    <!-- 文章页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/ChMkJ1lkKL-IH2ZMABAUa1NetkgAAeWIAHxLhYAEBSD720.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Monokai的博客
+            <!-- 文章页  -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+                玉不琢，不成器
+            
+            <!-- 文章页  -->
+            
+        </p>
+        <!-- 文章页meta -->
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/">[C++]类成员函数指针</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>普通的函数指针在C++Primer里面已经说的很详细了, 但是指向一个Class的成员函数指针该如何声明和使用?</p>
-<p>回顾一下普通函数指针, 写出声明和调用如下:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//声明:	为简化代码,不列出实现</span></span><br><span class="line"><span class="keyword">void</span> (*FuncPtr1)();	<span class="comment">//无参版本</span></span><br><span class="line"><span class="keyword">void</span> (*FuncPtr2)(<span class="keyword">int</span>); <span class="comment">//有参版本,参数类型为int</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//两个函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print1</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print2</span><span class="params">(<span class="keyword">int</span> value)</span></span>;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//令其指向对应函数</span></span><br><span class="line">FuncPtr1 = &amp;Print1;		<span class="comment">//取地址符可写可不写</span></span><br><span class="line">FuncPtr1 = &amp;Print2;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用:</span></span><br><span class="line">FuncPtr1();</span><br><span class="line">FuncPtr2(<span class="number">15</span>);</span><br></pre></td></tr></table></figure>
-
-
-
-<p>但如果想让函数指针指向一个类中的函数时,你可能会尝试这么做:</p>
-<p>先声明一个Class作为演示:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Eat</span><span class="params">()</span> </span>&#123; </span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Eat!!!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>尝试调用:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//声明一个函数指针</span></span><br><span class="line">    <span class="keyword">void</span> (*FuncPtr)();</span><br><span class="line">    FuncPtr = &amp;Person::Eat;	<span class="comment">//错误!!! 编译器会告诉你类型不符合无法赋值!</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>此时你可能会上网查找一下相关资料,然后用中文在<strong>百度搜索引擎</strong>上想查询一下相关内容,但是结果可能是….呃…你可能会看到十几篇博客,虽然它们的作者都不同,但是内容却出奇的一致,分不清谁抄袭的谁…可能会令你感到反胃.</p>
-<p>现在你要睁大眼睛,因为这种语法太奇怪我个人难以接受:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//声明函数指针,把指针限于在Person类</span></span><br><span class="line">	<span class="keyword">void</span> (Person:: *FuncPtr)();</span><br><span class="line">	FuncPtr = &amp;Person::Eat;	<span class="comment">//C++规定成员函数必须用取地址符</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//调用</span></span><br><span class="line">	Person* p = <span class="keyword">new</span> Person;</span><br><span class="line">	(p-&gt;*FuncPtr)();	<span class="comment">//没错,在main函数中声明的函数指针却可以通过对象调用! 这点我个人难以接受!</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">   <span class="comment">// =========================== //</span></span><br><span class="line">    <span class="comment">//补充,普通对象调用的方式</span></span><br><span class="line">    Person p;</span><br><span class="line">	(p.*FuncPtr)();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>函数成员指针作参数：</strong></p>
-<p>如果把指向函数成员的指针作为另一个函数的参数,语法又有些变化了:</p>
-<p>修改<code>Person</code>类:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Eat</span><span class="params">()</span> </span>&#123; </span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Eat!!!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//添加此函数</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Behavior</span><span class="params">(<span class="keyword">void</span> (Person::* FuncPtr)())</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		(<span class="keyword">this</span>-&gt;*FuncPtr)();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>调用端:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Person* p = <span class="keyword">new</span> Person;</span><br><span class="line">	p-&gt;Behavior(&amp;Person::Eat);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>调用<code>Behavior</code>函数的时候明确告诉它到底是哪个函数,再看看<code>Behavior</code>函数内部.不难理解 : 我们调用<code>Behavior</code>是通过<code>p</code>,也就是对象,但是在Class里面,我们的对象<code>p</code>则是this.</p>
-<p>换个说法:调用成员函数都要通过对象才可以调用,在类外是对象,一个有名字的p.而类内代表对象的则是this</p>
-
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/09/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" data-id="ckh7jzktk0005ucl5g44r8sip" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
 
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
 
-  
-    <article id="post-C-Initialization" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/08/12/C-Initialization/" class="article-date">
-  <time datetime="2020-08-12T10:39:19.000Z" itemprop="datePublished">2020-08-12</time>
-</a>
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main index-page">
     
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/12/C-Initialization/">[C++] Initialization</a>
-    </h1>
-  
-
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>C++11提出了Unifrom Initialization(一致性初始化)的概念，也就是可以用”{ }”这种大括号的形式进行<strong>初始化</strong>，这种类型是一个类模板，名为：<em>initializer_list</em>&lt;&gt;</p>
-<p><code>可能知识比较零散，所以在文末进行了总结。</code></p>
-<p>为了介绍此语法，写出如下简单代码示例(iostream头文件和std命名空间省略不写)：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Data</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Data() = <span class="keyword">default</span>; 	<span class="comment">//C++11新关键字，表示默认构造函数</span></span><br><span class="line">    Data(<span class="keyword">int</span> a, <span class="keyword">int</span> b) : v1(a), v2(b) &#123;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> v1;</span><br><span class="line">    <span class="keyword">int</span> v2;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/09/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" >
+            
+                <span>[C++]类成员函数指针</span>
+        </a>
+        <div class="abstract-content">
+            普通的函数指针在C++Primer里面已经说的很详细了, 但是指向一个Class的成员函数指针该如何声明和使用?
+回顾一下普通函数指针, 写出声明和调用如下:
+123456789101112131415//声明:	为简化代码,不列出实现void (*FuncPtr1)();	//无参版本void (*FuncPtr2)(int); //有参版本,参数类型为int//两个函数void Print1();void Print2(int value);    //令其指向对应函数FuncPtr1 = &amp;Print1;		//取地址符可写可不写FuncPtr1 = &amp;Print2...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/12</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/12/C-Initialization/" >
+            
+                <span>[C++] Initialization</span>
+        </a>
+        <div class="abstract-content">
+            C++11提出了Unifrom Initialization(一致性初始化)的概念，也就是可以用”{ }”这种大括号的形式进行初始化，这种类型是一个类模板，名为：initializer_list&lt;&gt;
+可能知识比较零散，所以在文末进行了总结。
+为了介绍此语法，写出如下简单代码示例(iostream头文件和std命名空间省略不写)：
+1234567891011...class Data&#123;public:    Data() = default; 	//C++11新关键字，表示默认构造函数    Data(int a, int b) : v1(a), v2(b) &#123...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/12</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/02/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/" >
+            
+                <span>[C++]头文件的作用(4)</span>
+        </a>
+        <div class="abstract-content">
+            在java和C#中，是没有头文件这种东西的。而在C++中，一种是编译文件，即CPP文件，也就是编译单元(translate unit)，另一种就是头文件了(HeaderFile) 。
+头文件的作用有很多，不只是声明某些东西，以供我们在多个cpp文件中include使用而已。
+但是这篇文章先讨论C++基础的头文件使用，也就是通常用于声明某些函数，以便用于整个程序中。
+创建一个cpp文件，名为Main.cpp，文件内容如下：
+12345678910111213#include &lt;iostream&gt;void Print(const char* str) &#123;    std:...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/03</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" >
+            
+                <span>[C++]链接器(Linker)是如何工作的(3)</span>
+        </a>
+        <div class="abstract-content">
+            每个cpp文件会被编译成一个独立的obj作为TranslateUnit(编译单元),多个cpp文件之间没有任何关系，这些文件没办法沟通，所以我们在项目里创建多个cpp文件的话，就需要一种方法将这些文件链接到一个程序，这就是链接器的主要目的。
+用例子来说明，Math.cpp文件内容如下(先不定义main函数)：
+123456789101112#include &lt;iostream&gt;void Print(const char *str)&#123;    std::cout &lt;&lt; str &lt;&lt; std::endl;&#125;int Multiply(int...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/01/28</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" >
+            
+                <span>[C++]#include和#define到底干了什么(2)</span>
+        </a>
+        <div class="abstract-content">
+            #include实际上就是将目标文件里面的所有内容复制粘贴到写#include的那个地方。
+创建两个文件来说明，一个是.h文件，一个是.cpp文件,如图：
 
-<p>对这个类进行如下调用：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Data d1;	<span class="comment">//调用默认构造</span></span><br><span class="line">Data d&#123;&#125;;	<span class="comment">//也调用的是默认构造</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Data d2 = &#123;<span class="number">1</span>, <span class="number">2</span>&#125;;	<span class="comment">//d2在分号结束前依旧是处于构造阶段，所以调用的是构造函数而不是赋值运算符</span></span><br><span class="line">Data d3&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;	<span class="comment">//这两句代码都调用有参构造，即 Data(int a, int b)</span></span><br></pre></td></tr></table></figure>
+然后在Math.cpp文件中写如下函数：
+1234int Multiply(int a, int b) &#123;    return a * b;&#125;
 
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Data d4;	<span class="comment">//调用默认构造</span></span><br><span class="line">d4 = &#123;<span class="number">1</span>,<span class="number">2</span>&#125;;		<span class="comment">//由于没有重载赋值运算符，所以调用的是有参构造（但这个例子比较特别），即Data(int a, int b)，下面会继续说明。</span></span><br></pre></td></tr></table></figure>
+然后调用此函数，main.cpp文件内容如下：
+12345678#include &lt;iostream&gt;int Multiply(int a, int b);int main() &#123;    std::cout &lt;&lt; Multiply(3...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/01/23</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/01/18/C-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" >
+            
+                <span>C++是如何工作的(1)</span>
+        </a>
+        <div class="abstract-content">
+            用下面这个非常简单的例子来说明。
+创建一个源文件，写如下代码。非常简单的打印
+1234567#include &lt;iostream&gt;int main() &#123;    std::cout &lt;&lt; &quot;老婆是新垣结衣！&quot; &lt;&lt; std::endl;    system(&quot;pause&quot;);&#125;
 
-<p>除了上面的写法，这样写也可以：<code>Data d3(&#123;1,2&#125;); </code> 但是写法繁琐，不推荐。</p>
-<p>可以看出，在大括号<code>&#123; &#125;</code>内的元素，也会调用其构造函数，<strong>这是编译器为我们做的</strong>。</p>
-<p><strong>但是要注意，大括号内的元素不能超过现有有参构造的参数列表的数量：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Data d5&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;	<span class="comment">//Error!! 实参过多</span></span><br><span class="line"></span><br><span class="line">Data d6;</span><br><span class="line">Data d6 = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;	<span class="comment">//Error!! 实参过多</span></span><br></pre></td></tr></table></figure>
+首先是#include这种带”#”号的代码都是预处理指令，它们会在编译之前就运行。 #include的作用就是将iostream文件中的所有代码复制粘贴到此文件内，没错就是字面意思，粘贴到此cpp文件内。
+所有cpp...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/01/18</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/01/15/OpenGL-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" >
+            
+                <span>[OpenGL] 环境配置</span>
+        </a>
+        <div class="abstract-content">
+            第一步：下载VisualStudio，然后安装”使用C++的桌面开发”
 
-<p>这是错误调用，现有的有参构造最多支持两个参数，而<code>d5</code>有4个参数，所以报错了。</p>
-<hr>
-<p>现在给<code>Data</code>类的<code>public</code>范围内加上此构造函数(为方便称呼，后面称之为<code>一致性初始化构造函数</code>)：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Data(<span class="built_in">initializer_list</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">list</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// for (auto a = list.begin(); a != list.end(); a++)</span></span><br><span class="line">    <span class="comment">//     cout &lt;&lt; a &lt;&lt; &quot; &quot;;</span></span><br><span class="line">    <span class="comment">// cout &lt;&lt; endl;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// for (const auto &amp;v : list)</span></span><br><span class="line">    <span class="comment">//     cout &lt;&lt; v &lt;&lt; &quot; &quot;;</span></span><br><span class="line">    <span class="comment">// cout &lt;&lt; endl;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>写上这个构造函数之后，上面的那些代码就会调用此构造函数了，因为对于有参构造函数(<code>即 Data(int a, int b)</code>)来说，此构造函数更适合（函数重载相关知识）。</p>
-<p>此构造函数的参数类型不能是引用或指针！    被注释的部分只是说明<code>initializer_list</code>的用法和其他容器相同。</p>
-<hr>
-<p>上面<code>d4</code>的例子提到 ：如果没有重载赋值运算符，这样写还是会调用有参构造函数。 <strong>（仅限<code>initializer_list</code>，以后再做说明）</strong></p>
-<p>但现在已经写上了<code>一致性初始化</code>构造函数，所以此次调用调用的是<code>Data(initializer_list&lt;int&gt; list)</code></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Data d4;	</span><br><span class="line">d4 = &#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>如果在给<code>Data</code>类加上重载赋值运算符，那么这次调用又会发生什么？</p>
-<p>如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>:</span><br><span class="line">...  <span class="comment">//其他代码不变</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> Data &amp;<span class="keyword">operator</span>=(<span class="built_in">initializer_list</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">list</span>)</span><br><span class="line"> &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> Data &amp;<span class="keyword">operator</span>=(<span class="keyword">int</span> v1)</span><br><span class="line"> &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+第二步：安装GLFW
+打开此网站 https://www.glfw.org/  ，在右上角选择Download，然后下载32bit的文件。
+注意：必须下载32bit，否则不会正常工作。
+解压到 D盘/OpenGL 的文件夹内(路径和文件夹随意)。
 
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Data d4;	</span><br><span class="line">d4 = &#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line"></span><br><span class="line">d4 = &#123;<span class="number">1</span>&#125;;</span><br></pre></td></tr></table></figure>
+第三步：安装GLEW
+打开此网站http://glew.sourceforge.net/  ，然后直接下载。
+解压到 D盘/OpenGL 的文件夹内。
 
-<p>这次d4调用的就是赋值运算符了</p>
-<p><strong>总结：</strong></p>
-<p>1.定义参数为<code>initializer_list</code>构造函数或重载赋值运算符前，只要大括号内的参数可以正确匹配对应有参构造或赋值函数，则正常调用。</p>
-<p>2.定义参数为<code>initializer_list</code>构造函数或重载赋值运算符后，只要写了大括号，那么必定调用<code>initializer_list</code>参数的构造或赋值。</p>
+第四步：配置头文件路径与链接器
+1.在”解决方案”处右键选择项目，然后新建一个cpp文件，这样才可以设置C++相...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/01/15</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/11/24/UE4-C-%E8%8E%B7%E5%8F%96%E8%A7%92%E8%89%B2%E5%8A%A8%E7%94%BB%E7%8A%B6%E6%80%81%E6%9C%BA/" >
+            
+                <span>[UE4]C++获取角色动画状态机</span>
+        </a>
+        <div class="abstract-content">
+            比如我在PlayerCharacter类里获取状态机,要先获取动画蓝图实例:
+1234UAnimInstance *animInstance = GetMesh()-&gt;GetAnimInstance();FAnimNode_StateMachine* BaseStateMachine =     animInstance-&gt;GetStateMachineInstanceFromName(FName(&quot;PlayerStateMachine&quot;));
 
-      
+
+
+如果在动画蓝图李获取状态机, 直接调用就行:
+1FAnimNode_StateMachine* BaseS...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/24</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/11/14/UE4-%E5%B0%84%E7%BA%BF%E6%A3%80%E6%B5%8B/" >
+            
+                <span>[UE4]射线检测与绘制</span>
+        </a>
+        <div class="abstract-content">
+            myCharacter是角色类，cameraComponent是角色类创建出来的摄像机组件
+12345678910111213141516171819202122232425262728//定义射线需要的起始点与终点Fvector cameraLocation = myCharacter-&gt;cameraComponent-&gt;K2_GetComponentLocation();Fvector startPos = cameraLocation + myCharacter-&gt;cameraComponent-&gt;GetForwardVector() * 300.f;Fve...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/14</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/20/C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" >
+            
+                <span>[C++]智能指针</span>
+        </a>
+        <div class="abstract-content">
+            shared_ptr类shared_ptr允许多个指针指向同一个对象，使用智能指针，需要包含头文件:memory
+指针指针也是模板
+12shared_ptr&lt;string&gt; strPtr;		//此智能指针指向intshared_ptr&lt;list&lt;int&gt;&gt; listPtr;		//此智能指针指向list&lt;int&gt;
+
+智能指针和普通指针用法类似：
+1234if(strPtr &amp;&amp; strPtr-&gt;empty())&#123;	*intPtr = &quot;Hello&quot;;&#125;
+
+make_shared...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/20</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">NEXT &amp;#62;</a>
+    </nav>
+    
+</main>
+            <!-- profile -->
+            
+            <div class="profile">
+    <img class="profile-avatar" alt="avatar" src= /avatar/1.JPG >
+    <div class="profile-name">Monokai</div>
+    
+    <div class="profile-signature">
+        Tech otakus save the world!
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/08/12/C-Initialization/" data-id="ckh7jzkt60000ucl56edy8ljy" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-C-头文件的作用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/02/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/" class="article-date">
-  <time datetime="2020-02-03T05:20:16.000Z" itemprop="datePublished">2020-02-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
+    <div class="profile-social">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/">[C++]头文件的作用(4)</a>
-    </h1>
-  
-
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在java和C#中，是没有头文件这种东西的。而在C++中，一种是编译文件，即CPP文件，也就是编译单元(translate unit)，另一种就是头文件了(HeaderFile) 。</p>
-<p>头文件的作用有很多，不只是声明某些东西，以供我们在多个cpp文件中include使用而已。</p>
-<p>但是这篇文章先讨论C++基础的头文件使用，也就是通常用于声明某些函数，以便用于整个程序中。</p>
-<p>创建一个<code>cpp</code>文件，名为<code>Main.cpp</code>，文件内容如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;Hello World!&quot;</span>);</span><br><span class="line">	</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
 
-<p>编译运行，控制台正常打印<code>HelloWorld！</code></p>
-<hr>
-<p>再创建一个cpp文件，名为<code>MyPrint.cpp</code>，文件内容如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitPrint</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;初始化打印函数!&quot;</span>)；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们通过<code>InitPrint</code>这个函数调用<code>Main.cpp</code>文件中的<code>Print</code>函数，编译后就报错了，提示我们找不到标识符。</p>
-<p>之前的文章说过，因为当前cpp文件没找到一个名为<code>print</code>的函数。</p>
-<p>这时候我们补上函数声明：<code>void Print(const char* str);</code></p>
-<p>这时候就可以正常运行项目了。</p>
-<p>但是，假如我们还有其他几个<code>cpp</code>文件也想用这个<code>Print</code>函数，那么，就要将这个函数声明复制再复制，这非常麻烦而且很蠢。</p>
-<hr>
-<p>创建一个头文件，名为<code>MyPrint.h</code>，文件内容如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>然后把<code>MyPrint.cpp</code>里面的<code>Print</code>函数的声明替换为：<code>#include &quot;MyPrint.h&quot;</code>，之前说过，<code>#include</code>就是将被引入的那个文件里所有内容拷贝到写<code>#include</code>的地方，所以，我们就相当于手动写了一个函数声明。</p>
-<p>现在<code>MyPrint.cpp</code>文件修改后的内容如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitPrint</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;初始化打印函数!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编译后可以正常运行项目。</p>
-<hr>
-<p>现在，我只想让<code>Main.cpp</code>只有一个<code>main</code>函数，所以，把<code>Print</code>函数移动到<code>MyPrint.cpp</code>中，然后<code>main</code>函数只调用<code>InitPrint</code>，这时候我们依旧需要在<code>Main.cpp</code>文件中留有<code>InitPrint</code>函数声明。</p>
-<p>将<code>Main.cpp</code>中的<code>Print</code>函数<strong>剪切</strong>到<code>MyPrint.cpp</code>中，并且把<code>Print</code>函数的声明写在<code>MyPrint.h</code>中。</p>
-<p><code>MyPrint.cpp</code>修改后如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;	</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitPrint</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;初始化打印函数!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>MyPrint.h</code>修改后如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitPrint</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>在之前的文章中忘了说明 —— 在<code>MyPrint.cpp</code>文件中，可以看到这次我把<code>InitPrint</code>函数写在<code>Print</code>函数的上面。<code>InitPrint</code>里面调用的是<code>Print</code>，如果我们注释掉<code>#include &quot;MyPrint.h&quot;</code>这条语句，再次编译是错的，因为编译器检查代码是从上到下的，会识别不到<code>InitPrint</code>中的<code>Print</code>是否存在。而写上头文件后，这种错误就消失，因为在头文件中，两个函数的声明都有，编译之前就引入了头文件，相当于手写了函数声明，所以就不会报错了。</p>
-<p><code>Main.cpp</code>修改后如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span>	</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    InitPrint();		<span class="comment">//引入了MyPrint.h，所以这个函数可以链接到</span></span><br><span class="line">	</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编译后成功运行。</p>
-<hr>
-<p><strong>那么回到头文件，<code>#pragma once</code>是什么？</strong></p>
-<p>这个语句是编译器自动生成的，之前说过，<code>#</code>开头的语句都是预处理指令，在编译前就会执行。</p>
-<p>这个语句的意思是说，我们只<code>include</code>这个文件一次。它也被称为Header guard(头文件保护符)。是防止我们把一个头文件多次<code>include</code>到同一个<code>cpp</code>文件中。</p>
-<p>因为，如果我们把一个文件多次<code>include</code>一个<code>cpp</code>文件中，我们会得到重复定义的错误，之前的文章已经见识过了。</p>
-<hr>
-<p>举个栗子，在<code>MyPrint.h</code>文件中创建一个class，名为<code>Player</code>，然后注释<code>#pragma once</code>:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//#pragma once</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitPrint</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>让他空着，只作为说明用而已。</p>
-<p>然后在<code>MyPrint.cpp</code>中，引入这个头文件两次：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<p>编译后，会提示我们：“class”类型重定义。</p>
-<p>这是当然，相当于我们把<code>Player</code>这个<code>class</code>写了两份，但是不会有人犯这种引入同一个头文件两次的低级错误。</p>
-<p>好好回忆一下<code>#include</code>是怎样工作的。之前说过，<code>include</code>就是把头文件的内容复制粘贴到写<code>include</code>的那个地方，如果我们有一连串的<code>#include</code>，会发生什么？</p>
-<p>创建一个新的头文件，名为<code>Common.h</code>:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br></pre></td></tr></table></figure>
-
-<p>然后在<code>MyPrint.cpp</code>中引入这个头文件：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;Common.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<p>编译后依然是重复定义的错误，因为我们注释了<code>MyPrint.h</code>中的<code>#pragma once</code>语句，所以，我们通过<code>#include &quot;MyPrint.h&quot;</code>语句已经引入这个头文件了一次，又通过<code>#include &quot;Common.h&quot;</code>再引入了一次。还记得吗，所为<code>#include</code></p>
-<p>就是复制粘贴，所以另外提一句，尽量把<code>#include</code>都写在<code>cpp</code>文件。</p>
-<p>将<code>MyPrint.h</code>中的<code>#pragma once</code>语句取消注释，可以看到程序可以正常运行。</p>
-
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/02/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/" data-id="ckh7jzkth0002ucl54sn64s0u" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-C-链接器-Linker-是如何工作的" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" class="article-date">
-  <time datetime="2020-01-28T05:56:16.000Z" itemprop="datePublished">2020-01-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
+        <div class="friends">
+            <div>FRIENDS</div>
+            
+                
+            
+                
+            
+                
+            
+        </div>
+    
+    
+</div>
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/">[C++]链接器(Linker)是如何工作的(3)</a>
-    </h1>
-  
-
-      </header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>每个<code>cpp</code>文件会被编译成一个独立的<code>obj</code>作为<code>TranslateUnit(编译单元)</code>,多个<code>cpp</code>文件之间没有任何关系，这些文件没办法沟通，所以我们在项目里创建多个<code>cpp</code>文件的话，就需要一种方法将这些文件链接到一个程序，这就是链接器的主要目的。</p>
-<p>用例子来说明，<code>Math.cpp</code>文件内容如下(先不定义main函数)：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;打印函数调用&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
 
-<p>实际上，在<code>右键项目</code>然后<code>生成</code>的时候，会有两件事发生——<strong>编译</strong>和<strong>链接</strong>，不过我们可以在VisualStudio区分两者。</p>
-<p>如果按下ctrl+F7，也就是编译单个文件，只有<strong>编译</strong>会发生，<strong>链接</strong>不会发生。</p>
-<p>只有当生成整个项目，或者F5运行项目的时候，才会<strong>编译</strong>，然后<strong>链接</strong>。</p>
-<p>按下编译<code>Math.cpp</code>文件，可以看到无任何错误，并且在项目文件夹中得到了一个<code>.obj</code>文件。</p>
-<p>再次按<strong>F5运行</strong>或是按下<strong>生成</strong>按键。就会看到报错了！如图所示：</p>
-
-
-
-
-<p>因为我们缺少了入口函数，也就是main函数。也正如前面所说，单独编译不会出错，因为链接器还没有工作。</p>
-<p>在报错信息中可以看到这句话：<code>LINK : fatal error LNK1561: 必须定义入口点</code></p>
-<p><code>LNK1561</code>，这个LNK就表示Link，此次错误是链接阶段引起的。</p>
-<p>让我们处理好它，创建一个main函数就行：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>再次运行就不会出现任何报错了。</p>
-<p>当然，编译器除了可以报出LNK的链接错误，也可以报出编译阶段的错误，通常是语法错误。</p>
-<p>现在，再将随便语句后面的分号删除掉，然后编译，会得到如下错误提示：</p>
-
-
-
-
-<p><code>error C2143: 语法错误</code>可以看到这些字样，<code>C2143</code>这C开头的字幕就表示编译阶段发生了错误，也就是语法错误。</p>
-<p><strong>现在，创建一个文件，用于放置<code>Print</code>函数。我将这个文件命名<code>MyPrint.cpp</code></strong></p>
-<p><strong>然后将<code>Math.cpp</code>中的<code>Print</code>函数剪切到<code>MyPrint.cpp</code>中，并且补上<code>#include &lt;iostream&gt;</code>语句。</strong></p>
-<p>现在<code>Math.cpp</code>的内容如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;打印函数调用&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; Multiply(<span class="number">3</span>, <span class="number">4</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>单独编译Math.cpp文件</strong>，可以看到报错：<code>error C3861: “Print”: 找不到标识符</code></p>
-<p>C开头，显然是一个编译阶段的错误，因为这个文件完全不知道名为<code>Print</code>在哪。</p>
-<p>现在修改好它 —— 在<code>#include</code>语句下面加上函数声明：<code>void Print(const char *str);</code></p>
-<p>然后单独编译，可以看到编译成功。按F5运行也是没有任何错误了，并且成功输出了<code>12</code>。</p>
-<hr>
-<p>现在再来看看另一种链接错误 —— unresolved external symbol(未解决的外部符号)。当链接器找不到它需要的东西时，就会发生这种错误。</p>
-<p>把<code>MyPrint.cpp</code>文件中的<code>Print</code>函数名随便改一下，比如<code>Pinrtz</code>。</p>
-<p>然后<strong>单独编译</strong>（提醒一句，单独编译链接器不会执行！）<code>Math.cpp</code>现在我的Math.cpp文件中有一个<code>void Print(const char *str);</code>函数的声明，所以这个文件依然会被编译，并且没有报错，因为编译器相信某个文件中有一个<code>Print</code>函数。但找到这个<code>Print</code>函数是<strong>链接阶段</strong>的工作。</p>
-<p>所以生成整个项目，就会看到报错语句以LNK字母开头，错误提示是： <strong>未解决的外部符号</strong>。</p>
-<p>在<code>Multiply</code>函数中调用了<code>Print</code>函数，但链接器找不到应该<code>link</code>到哪个函数。</p>
-<p>如果注释<code>Multiply</code>中的<code>print</code>函数调用，然后生成整个项目，就会正常运行了。因为我们从未调用<code>Print</code>函数，所以链接器不执行。</p>
-<p>在玩个有趣的。因为是<code>Multiply</code>函数调用了错误的<code>Print</code>函数，所以，在<code>main</code>函数中，注释掉<code>Multiply</code>函数的打印调用，这次<code>Multiply</code>没有被调用，<code>print</code>自然也不会被调用。然后再次编译，还是会报一个<strong>未解决的外部符号</strong>的链接错误。这是为什么？</p>
-<p>因为虽然这个文件不调用此函数，<strong>但是编译器不会保证别的文件是否调用了它</strong>。不过有一个办法可以消除这种情况，那就是<code>static</code>关键字。</p>
-<p>现在修改后的<code>Math.cpp</code>文件内容如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;打印函数调用&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//std::cout &lt;&lt; Multiply(3, 4) &lt;&lt; std::endl;</span></span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我在<code>Multiply</code>函数前面加上了<code>static</code>关键字，表示这是一个静态函数，只为当前<code>translate unit</code>声明，也就是只为这个Math.cpp声明。<strong>因为其他<code>cpp</code>文件不能使用当前<code>cpp</code>文件中定义的静态函数。</strong></p>
-<p>这个静态函数没有在<code>Math.cpp</code>中进行调用，而且其他文件确保不会调用。再次编译后，就不会出错了，项目会正常运行。</p>
-<hr>
-<p>然而不仅仅是函数名如此重要，在<code>Math.cpp</code>文件中可以看到这样的函数声明：<code>void Print(const char *str);</code> 如果链接器找不到和此声明一模一样的函数，也会报一个链接错误(LNK错误代码)。</p>
-<p>就比如更改<code>MyPrint.cpp</code>中的<code>Print</code>函数返回值类型，又或者改它的参数列表。然后单独编译不会报错，<code>生成</code>或<code>运行</code>的时候就会得到一个LNK的链接错误。</p>
-<p>还有一种常见的链接错误，是因为重复符号。当同一个函数在同一个cpp文件中<strong>定义</strong>两次以上时，编译会得到<code>C开头的错误代码</code>，表示这是编译阶段的错误，是编译器给我们的提示。</p>
-<p>然而，如果我们这样做 —— 在<code>MyPrint.cpp</code>文件中，将<code>Print</code>函数复制一份，粘贴到<code>Math.cpp</code>文件，如下所示：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;打印函数调用&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; Multiply(<span class="number">3</span>, <span class="number">4</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>现在，<code>Math.cpp</code>和<code>MyPrint.cpp</code>文件中都有一个一模一样的函数，这时候，如果单独编译当然不会报错，因为语法上完全正确。</p>
-<p>但是，当生成或者运行的时候，就会的到一个LNK的链接错误，它告诉我们找到了一个或多个被定义的符号。在这种情况下，链接器不知道到底该链接到哪一个函数。</p>
-<hr>
-<p>先修改好这个项目，让其可以成功运行，继续往下看。</p>
-<p>现在创建一个头文件(Header File)，我将其命名为<code>MyPrint.h</code></p>
-<p>然后将<code>Myprint.cpp</code>文件中的<code>Print</code>函数剪切到这个头文件中，如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>修改<code>MyPrint.cpp</code>文件：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitPrint</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;假如此函数是初始化Print&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这时候编译，会得到和文章开头所说的错误 —— <code>error C3861: “Print”: 找不到标识符</code></p>
-<p>但是我们如果在写一个函数声明上去，也没有任何作用，还是会得到相同的错误提示。这是因为，之前的文章说过，链接器是将<code>obj</code>文件链接在一起，也就是将编译后的<code>.cpp</code>文件链接在一起，而头文件不会进行编译！</p>
-<p>所以我们只要将这个头文件引入就行，之前也说过，引入头文件，就相当于将头文件中的内容粘贴到当前文件。</p>
-<p>给<code>MyPrint.cpp</code>加上<code>#include &quot;MyPrint.h&quot;</code>语句，修改后的<code>cpp</code>文件如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitPrint</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;假如此函数是初始化Print&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>现在，运行项目，可以看到成功打印出语句了。在<code>Math.cpp</code>文件中，我没有引入<code>MyPrint.h</code>头文件，但依旧可以正常运行。这是因为在<code>MyPrint.cpp</code>文件中，已经引入了<code>MyPrint.h</code>头文件，也就是说，已经将头文件里面的函数粘贴到此文件中，所以<code>Math.cpp</code>里面的函数声明，可以找到一模一样的函数定义，因此可以正常运行。</p>
-<hr>
-<p>但如果将这个函数声明替换为<code>#include &quot;MyPrint.h&quot;</code>语句，运行后就又会得到一个重复定义的LNK错误。<code>Math.cpp</code>文件修改后如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;打印函数调用&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; Multiply(<span class="number">3</span>, <span class="number">4</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这又回到了<code>#include</code>到底做了什么的问题，注意：当include一个头文件时，就是将那个头文件的所有内容粘贴到写<code>include</code>语句的那个位置。</p>
-<p><strong>所以，这些文件就相当于做了以下工作：(这是伪代码，表示<code>#include &quot;MyPrint.h&quot;</code>的工作内容)</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">MyPrint.cpp如下：</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line">    </span><br><span class="line">注意：这个函数相当于<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitPrint</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;假如此函数是初始化Print&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//============================================================</span></span><br><span class="line"></span><br><span class="line">Math.cpp文件如下：</span><br><span class="line">    </span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line">注意：这个函数相当于<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;打印函数调用&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; Multiply(<span class="number">3</span>, <span class="number">4</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这就又回到了上面所说过的，在多个<code>cpp</code>文件中重复定义的错误。</p>
-<p>解决方式有以下几种：</p>
-<p>1.将<code>MyPrint.h</code>中的<code>Print</code>函数声明为<code>static</code>静态函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>之前说过，静态函数只对当前<code>cpp</code>文件有效，也就是只对引入该头文件的cpp文件有效 —— 当<code>Print</code>函数被<code>include</code>到<code>MyPrint.cpp</code>和<code>Math.cpp</code>时，只会对该文件内部有效，<code>print</code>函数，对其他任何<code>obj</code>文件都是不可见的。</p>
-<hr>
-<p>2.将<code>MyPrint.h</code>中的<code>Print</code>函数声明为<code>inline</code>内联函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>inline内联函数的意思是，把函数的主体拿过来取代调用（也就是花括号里面的内容）。</p>
-<p><strong>以下是伪代码，表示inline函数执行过程：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">MyPrint.cpp 伪代码如下：</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitPrint</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    把Print函数的主体拿过来取代调用：</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//============================================</span></span><br><span class="line"></span><br><span class="line">Math.cpp 伪代码如下：</span><br><span class="line">    </span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    把Print函数的主体拿过来取代调用：</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; Multiply(<span class="number">3</span>, <span class="number">4</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>3.将函数声明和定义分离</p>
-<p>修改<code>MyPrint.h</code>头文件，只留下一条函数声明:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>修改<code>MyPrint.cpp</code>，写下函数定义：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;MyPrint.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitPrint</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Print(<span class="string">&quot;假如此函数是初始化Print&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编译运行，成功！</p>
-<p>这就是为什么人们一直说头文件放声明，cpp文件写定义，然而总不说明原因，让学c++的新手们困惑不已。在引入头文件的<code>cpp</code>文件中，就相当于写了函数的声明，编译的时候，链接器就会链接到对应的函数了。</p>
-<p>然而头文件的用途还多得很，会在后面的文章中一一叙述。</p>
-
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" data-id="ckh7jzktl0006ucl5cmg1avcc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-C-include和-define到底干了什么" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" class="article-date">
-  <time datetime="2020-01-23T04:44:41.000Z" itemprop="datePublished">2020-01-23</time>
-</a>
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/">[C++]#include和#define到底干了什么(2)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#include实际上就是将目标文件里面的所有内容复制粘贴到写#include的那个地方。</p>
-<p>创建两个文件来说明，一个是<code>.h</code>文件，一个是.cpp文件,如图：</p>
-
-
-<p>然后在<code>Math.cpp</code>文件中写如下函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后调用此函数，<code>main.cpp</code>文件内容如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; Multiply(<span class="number">3</span>, <span class="number">4</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>F5运行后可以看到控制台输出：<code>12</code></p>
-<p>然后将<code>Math.cpp</code>修改一下</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line"><span class="comment">//故意不写 &#125; 用头文件引入一个 &#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>这时候编译会报错那是肯定的，但是我们可以玩一个花招。</p>
-<p>在<code>EndBrace.h</code>文件内容(删掉<code>#pragma once</code>)：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>就写一个分号，然后再次修改<code>Math.cpp</code>文件中的函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;EndBrace.h&quot;</span></span></span><br></pre></td></tr></table></figure>
-
-<p>把刚才在<code>EndBrace.h</code>头文件中写的分号引入过来，正如文章开头所说的 —— #include实际上就是将目标文件里面的所有内容复制粘贴到<strong>写#include的那个地方</strong>。</p>
-<p>然后再次编译，可以看到没有任何报错，控制台正常打印：</p>
-
-
-
-
-<p>现在应该明白#include的基本工作内容了。不过继续往下探索！因为有一个办法可以让编译器输出一个文档，里面包含预处理(preprocesson)后的结果。</p>
-<p>右键项目，选择“属性”，如图：</p>
-
-
-
-
-<p>然后在”C/C++”栏位下面的”预处理器”将”预处理到文件”改为”是”,如图所示：</p>
-
-
-
-
-<p>设置完成后单独编译<code>Math.cpp</code>文件，编译成功后，在项目文件夹的Debug文件夹中，可以看到一个<code>Math.i</code>的文件。</p>
-<p>然后用<code>notepad++</code>打开，可以看到如下内容：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">line</span> 1 <span class="meta-string">&quot;c:\\users\\administrator\\source\\repos\\c++练习\\c++练习\\math.cpp&quot;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">line</span> 1 <span class="meta-string">&quot;c:\\users\\administrator\\source\\repos\\c++练习\\c++练习\\endbrace.h&quot;</span>	<span class="comment">//头文件</span></span></span><br><span class="line">&#125;	<span class="comment">//头文件中的内容添加到这里了。也就是一个花括号</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">line</span> 5 <span class="meta-string">&quot;c:\\users\\administrator\\source\\repos\\c++练习\\c++练习\\math.cpp&quot;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>可以看到通过<code>#include</code>确实的引入了一个花括号。 没错，<code>#include</code>就是如此简单。</p>
-<hr>
-<p>现在再来看看<code>#define</code>到底干了什么吧！</p>
-<p>修改<code>Math.cpp</code>文件内容：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INTEGER int</span></span><br><span class="line"></span><br><span class="line"><span class="function">INTEGER <span class="title">Multiply</span><span class="params">(INTEGER a, INTEGER b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>#define</code>的意思就是在此<code>cpp</code>文件内，将所有的<code>INTEGER</code>替换成<code>int</code>。</p>
-<p>编译后，再看看<code>Math.i</code>文件：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">line</span> 1 <span class="meta-string">&quot;c:\\users\\administrator\\source\\repos\\c++练习\\c++练习\\math.cpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到所有的<code>INTEGER</code>都替换成了<code>int</code>。</p>
-<p>注意：调试完毕后记得把”C/C++”栏位下面的”预处理器”将”预处理到文件”改为”否”。因为这样就不能产出<code>obj</code>文件了，前面说过，<code>obj</code>文件会被链接器链接成<code>.exe</code>文件，才可以执行。</p>
-
-      
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" data-id="ckh7jzktc0001ucl5bhv74ms3" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-C-是如何工作的" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/18/C-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" class="article-date">
-  <time datetime="2020-01-18T05:55:28.000Z" itemprop="datePublished">2020-01-18</time>
-</a>
+    <!-- 不蒜子  -->
     
-  </div>
-  <div class="article-inner">
+    <div class="busuanzi-container">
     
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/18/C-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/">C++是如何工作的(1)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>用下面这个非常简单的例子来说明。</p>
-<p><strong>创建一个源文件，写如下代码。非常简单的打印</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;老婆是新垣结衣！&quot;</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>首先是<code>#include</code>这种带”#”号的代码都是预处理指令，它们会在编译之前就运行。 <code>#include</code>的作用就是将<code>iostream</code>文件中的所有代码复制粘贴到此文件内，没错就是字面意思，粘贴到此<code>cpp</code>文件内。</p>
-<p>所有cpp文件都会被编译，头文件则不会。关于<code>#include</code>和头文件后面有专门的文章说明。</p>
-<hr>
-<p>然后我们试试单独编译这个<code>main.cpp</code>文件，右键选中它，然后选择“编译”，如图：</p>
-
-
-<hr>
-<p>编译成功的话，会生成一个<code>.obj</code>的文件。</p>
-<p>右键项目，选择“在文件资源管理器中打开文件夹”，具体操作如下图所示：</p>
-
-
-<hr>
-<p>然后在<code>Debug</code>文件夹里面可以看到一个<code>main.obj</code>的文件。</p>
-<p>回到编译器，右键项目文件，选择生成，如图：</p>
-
-
-<hr>
-<p>然后再次打开项目文件夹，在上级目录中的Debug文件夹中可以看到<code>.exe</code>可执行文件，双击运行，可以看到我们打印出来的文字：</p>
-
-
-<hr>
-<p>实际上，单独编译一个文件，链接器不会执行。所以就不会生成exe文件， 当整体编译时（右键项目→生成），才会生成<code>exe</code>文件，链接器才会工作。</p>
-<p><strong>那链接器是什么呢？</strong></p>
-<blockquote>
-<p>链接器的作用就是把项目里所有的<code>obj</code>文件组成一个<code>exe</code>，如果有很多个<code>cpp</code>文件被编译的话，他们就一个一个单独编译。每个<code>Cpp</code>文件会编译成一个<code>.obj</code>文件(Windows平台下的拓展名)。</p>
-</blockquote>
-<p>了解概念后我们接着往下看。(关于链接器后面也会有专门的文章说明。)</p>
-<p>现在再次创建一个文件：</p>
-
-
-<hr>
-<p>我们把在<code>main</code>函数中的打印语句删掉，在<code>MyPrint.cpp</code>文件中创建一个函数，用于打印语句。</p>
-<p><code>MyPrint.cpp</code>文件内容如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MyPrint</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>然后编译当前文件，快捷键 : Ctrl + F7. 如果没有出错，可以看到文件夹里面有了<code>MyPrint.obj</code>文件</p>
-<p>修改<code>Main.cpp</code>文件：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    MyPrint(<span class="string">&quot;老婆是新垣结衣&quot;</span>);</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后编译当前文件。如果没有出错，可以看到文件夹里面有了<code>main.obj</code>文件。</p>
-<hr>
-<p>现在我们的项目里有多个<code>cpp</code>文件，来看看编译后的结果吧 —— 右键整个项目，生成。</p>
-<p>可以看到报错了！提示：<code>error C3861: “MyPrint”: 找不到标识符</code></p>
-<p>这就是为什么单独编译一个<code>cpp</code>文件的时候不会出错，而且<code>obj</code>文件也正常生成，当编译整个项目的时候，链接器就会运行，并报出<code>找不到标识符</code>的错误（在此项目中）。</p>
-<p>现在改掉问题 —— 修改<code>Main.cpp</code>文件，在<code>main</code>函数前面写上：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MyPrint</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>然后再次生成，提示成功！ 并且生成了<code>exe</code>文件。运行后就会打印出：”老婆是新垣结衣”的文字。</p>
-<p>这就是为什么C++很难伺候的原因之一了，我们继续往下看。</p>
-<blockquote>
-<p>在另一个文件中写一个函数。然后编译时<code>main.cpp</code>不知道<code>MyPrint(&quot;老婆是新垣结衣&quot;)</code>的函数在哪（因为他们是单独编译的），所以我们要通过一个声明解决这个问题。声明一个叫<code>MyPrint</code>的函数是存在的。我们告诉编译器有个函数叫<code>MyPrint</code>，编译器就会相信我们，因为编译器根本不关心<code>MyPrint</code>到底在哪被定义的。</p>
-<p>有了声明，然后编译的时候就是链接器出场了。在编译整个项目时，链接器通过<code>main</code>函数里面调用的<code>MyPrint(&quot;老婆是新垣结衣&quot;)</code>去在其他文件找签名一样的函数的定义，如果找不到定义，就会得到一个linker error 。</p>
-</blockquote>
-<p>我们在<code>MyPrint.cpp</code>文件中，将<code>MyPrint</code>函数的名字随便改一下，然后编译后生成，可以看到可怕的<strong>linker error</strong>：</p>
-
-
-
-
-
-
-<p><strong>以上就是C++的基本工作流程，以后会慢慢深入探索下去，然后整理成博客，做成笔记~</strong></p>
-
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/18/C-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" data-id="ckh7jzkti0003ucl5514f68rc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-OpenGL-环境配置" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/01/15/OpenGL-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2020-01-15T05:58:49.000Z" itemprop="datePublished">2020-01-15</time>
-</a>
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/15/OpenGL-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">[OpenGL] 环境配置</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>第一步：下载VisualStudio，然后安装”使用C++的桌面开发”</strong></p>
-
-
-<hr>
-<p><strong>第二步：安装GLFW</strong></p>
-<p>打开此网站 <a target="_blank" rel="noopener" href="https://www.glfw.org/">https://www.glfw.org/</a>  ，在右上角选择Download，然后下载32bit的文件。</p>
-<p>注意：必须下载32bit，否则不会正常工作。</p>
-<p>解压到 D盘/OpenGL 的文件夹内(路径和文件夹随意)。</p>
-<hr>
-<p><strong>第三步：安装GLEW</strong></p>
-<p>打开此网站<a target="_blank" rel="noopener" href="http://glew.sourceforge.net/">http://glew.sourceforge.net/</a>  ，然后直接下载。</p>
-<p>解压到 D盘/OpenGL 的文件夹内。</p>
-<hr>
-<p><strong>第四步：配置头文件路径与链接器</strong></p>
-<p>1.在”解决方案”处右键选择项目，然后新建一个cpp文件，这样才可以设置C++相关的内容。名称和位置随意。</p>
-
-
-<hr>
-<p>2.再次右键项目，选择”属性”，展开”C/C++选项”，在”附加包含目录”中点击”编辑”，然后选择右上角的文件夹图标，然后在下方的地址处添加(双击空白处)刚才下载的glew和glfw文件，路径见图片。</p>
-
-
-<p>3.然后在”链接器”的”常规”下面的”附加库目录”编辑，做法和上面的一样，路径见图片。</p>
-
-
-<p>4.在选择”链接器”下面的”输入”,编辑”附加依赖项”,在空白处写以下内容：</p>
-<p>opengl32.lib    glfw3.lib    glew32s.lib </p>
-
-
-<p>至此，环境就搭建完毕了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/15/OpenGL-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" data-id="ckh7jzktm0007ucl5b5k811vv" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-UE4-C-获取角色动画状态机" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/24/UE4-C-%E8%8E%B7%E5%8F%96%E8%A7%92%E8%89%B2%E5%8A%A8%E7%94%BB%E7%8A%B6%E6%80%81%E6%9C%BA/" class="article-date">
-  <time datetime="2019-11-24T13:50:55.000Z" itemprop="datePublished">2019-11-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/24/UE4-C-%E8%8E%B7%E5%8F%96%E8%A7%92%E8%89%B2%E5%8A%A8%E7%94%BB%E7%8A%B6%E6%80%81%E6%9C%BA/">[UE4]C++获取角色动画状态机</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>比如我在PlayerCharacter类里获取状态机,要先获取动画蓝图实例:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UAnimInstance *animInstance = GetMesh()-&gt;GetAnimInstance();</span><br><span class="line"></span><br><span class="line">FAnimNode_StateMachine* BaseStateMachine = </span><br><span class="line">    animInstance-&gt;GetStateMachineInstanceFromName(FName(<span class="string">&quot;PlayerStateMachine&quot;</span>));</span><br></pre></td></tr></table></figure>
-
-
-
-<p>如果在动画蓝图李获取状态机, 直接调用就行:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FAnimNode_StateMachine* BaseStateMachine = GetStateMachineInstanceFromName(FName(<span class="string">&quot;PlayerStateMachine&quot;</span>));</span><br></pre></td></tr></table></figure>
-
-<p>关于<code>GetStateMachineInstanceFromName</code>的FName参数 , 则是你的动画状态机名称, 在这里我是<code>PlayerStateMachine</code>,请看图:</p>
-
-
-
-
-<p>比如可以在代码中知道当前在播放哪个动画节点:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当前是否在播放&quot;Idle&quot;节点</span></span><br><span class="line">BaseStateMachine-&gt;GetCurrentStateName() == FName(<span class="string">&quot;Idle&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>在图片中是我想检测的<code>Idle</code>节点:</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/11/24/UE4-C-%E8%8E%B7%E5%8F%96%E8%A7%92%E8%89%B2%E5%8A%A8%E7%94%BB%E7%8A%B6%E6%80%81%E6%9C%BA/" data-id="ckh7jzkto0009ucl5g2b7e9xa" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-UE4-射线检测" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/14/UE4-%E5%B0%84%E7%BA%BF%E6%A3%80%E6%B5%8B/" class="article-date">
-  <time datetime="2019-11-14T05:21:53.000Z" itemprop="datePublished">2019-11-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/14/UE4-%E5%B0%84%E7%BA%BF%E6%A3%80%E6%B5%8B/">[UE4]射线检测与绘制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>myCharacter是角色类，cameraComponent是角色类创建出来的摄像机组件</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义射线需要的起始点与终点</span></span><br><span class="line">Fvector cameraLocation = myCharacter-&gt;cameraComponent-&gt;K2_GetComponentLocation();</span><br><span class="line">Fvector startPos = cameraLocation + myCharacter-&gt;cameraComponent-&gt;GetForwardVector() * <span class="number">300.f</span>;</span><br><span class="line">Fvector endPos = cameraLocation + myCharacter-&gt;cameraComponent-&gt;GetForwardVector() * <span class="number">2000.f</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义一下射线需要的碰撞参数</span></span><br><span class="line"><span class="function">FCollisionQueryParams <span class="title">traceParams</span><span class="params">(<span class="literal">true</span>)</span></span>;</span><br><span class="line">traceParams.AddIgnoredActor(myCharacter);</span><br><span class="line">traceParams.bReturnPhysicalMaterial = <span class="literal">false</span>;</span><br><span class="line">traceParams.bTraceComplex = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">FHitResult <span class="title">hit</span><span class="params">(ForceInit)</span></span>;	<span class="comment">//保存返回的目标信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//发射射线</span></span><br><span class="line"><span class="keyword">if</span>(GetWorld()-&gt;LineTraceSingleByChannel</span><br><span class="line">   (hit, startPos, endPos, ECollisionChannel::ECC_GameTraceChannel1, traceParams))<span class="comment">//第四个参数是配置表里面的第一个(对感兴趣的目标block)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//绘制射线</span></span><br><span class="line">    ULineBatchComponent* <span class="keyword">const</span> lineBatcher = GetWorld()-&gt;PersistentLineBatcher;<span class="comment">//获取射线绘制的组件</span></span><br><span class="line">	<span class="keyword">if</span> (lineBatcher)</span><br><span class="line">	&#123;</span><br><span class="line">		lineBatcher-&gt;DrawLine(startPos, endPos, FLinearColor::Red, <span class="number">10</span>, <span class="number">0.f</span>, <span class="number">3.0f</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AActor* targetActor = hit.GetActor();</span><br><span class="line"><span class="comment">//这个targetActor就是射线打到的Actor</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/11/14/UE4-%E5%B0%84%E7%BA%BF%E6%A3%80%E6%B5%8B/" data-id="ckh7jzktr000bucl58hju5cla" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-C-智能指针" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/10/20/C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" class="article-date">
-  <time datetime="2019-10-20T15:43:28.000Z" itemprop="datePublished">2019-10-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/20/C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">[C++]智能指针</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="shared-ptr类"><a href="#shared-ptr类" class="headerlink" title="shared_ptr类"></a>shared_ptr类</h2><p>shared_ptr允许多个指针指向同一个对象，使用智能指针，需要包含头文件:memory</p>
-<p>指针指针也是模板</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="built_in">string</span>&gt; strPtr;		<span class="comment">//此智能指针指向int</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;&gt; listPtr;		<span class="comment">//此智能指针指向list&lt;int&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>智能指针和普通指针用法类似：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(strPtr &amp;&amp; strPtr-&gt;empty())</span><br><span class="line">&#123;</span><br><span class="line">	*intPtr = <span class="string">&quot;Hello&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="make-shared函数"><a href="#make-shared函数" class="headerlink" title="make_shared函数"></a>make_shared函数</h3><p>安全的分配和使用动态内存的方法是调用make_shared函数，此函数在堆内存中分配一个对象并初始化它，返回指向此对象的shared_ptr,用法：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p1 = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>);	<span class="comment">//p1指向int，值为10</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p2 = make_shared&lt;<span class="keyword">int</span>&gt;();	<span class="comment">//p2指向一个值初始化的int，值为0</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="built_in">string</span>&gt; p3 = make_shared&lt;<span class="built_in">string</span>&gt;(<span class="number">5</span>,<span class="string">&quot;Hi&quot;</span>);	<span class="comment">//p3指向值为&quot;HiHiHiHiHi&quot;的string</span></span><br></pre></td></tr></table></figure>
-
-<p>与顺序容器的emplace成员类似，make_shared用其参数构造给定类型的对象。如果不传递任何参数，对象就会进行值初始化。</p>
-<p>使用auto保存智能指针：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> p = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>);	<span class="comment">//p指向值为10的int</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="shared-ptr拷贝、赋值和引用计数"><a href="#shared-ptr拷贝、赋值和引用计数" class="headerlink" title="shared_ptr拷贝、赋值和引用计数"></a>shared_ptr拷贝、赋值和引用计数</h3><p>每个智能指针shared_ptr都有一个关联的计数器，称为<strong>引用计数器</strong>，拷贝一个shared_ptr计数器都会递增。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> p = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>);	<span class="comment">//p指向的int对象只有其一个引用者</span></span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">p2</span><span class="params">(p)</span></span>;		<span class="comment">//调用拷贝构造函数，p和p2指向相同对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> p3 = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">15</span>);</span><br><span class="line"><span class="keyword">auto</span> p3 = p2;</span><br><span class="line"><span class="comment">//现在p3和p2指向相同对象，p3原来指向的对象已经没有引用者，这块内存自动释放</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>总的来说，进行拷贝构造时，两者指向相同对象，引用计数为2。</p>
-<p>进行赋值的时候，递减 = 号左边所指对象引用计数，递增右边所指对象的引用计数。如果= 号左边引用计数为0（即没有引用者，那么释放内存）</p>
-<p>应对局部智能指针变量也轻而易举</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Func</span><span class="params">(T value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">shared_ptr</span>&lt;T&gt; p = make_shared&lt;T&gt;(value);   </span><br><span class="line">    <span class="comment">//使用p</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//P离开作用域，引用计数为0，p指向的内存会释放掉</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>自动释放相关联的内存：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">Func</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> make_shared&lt;<span class="keyword">int</span>&gt;(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Func2</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p = Func(<span class="number">10</span>);</span><br><span class="line">    <span class="comment">//使用p</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//离开作用域，递减引用计数，此时引用计数显然为0，P指向的内存销毁</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>相对于智能指针，new和delet就显得笨重：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span>* <span class="title">Func</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//此函数的调用者负责释放此内存</span></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">UserFunc</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> *p = Func(<span class="number">10</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//P离开了作用域，但是p指向的内存没有被销毁！！</span></span><br><span class="line"><span class="comment">//要在花括号之前补上： delete p;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="shared-ptr和new结合使用"><a href="#shared-ptr和new结合使用" class="headerlink" title="shared_ptr和new结合使用"></a>shared_ptr和new结合使用</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span> &lt;<span class="keyword">float</span>&gt; p1;		<span class="comment">//可以指向一个float</span></span><br><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">float</span>&gt; <span class="title">p2</span><span class="params">(<span class="keyword">new</span> <span class="keyword">float</span>(<span class="number">3.14f</span>))</span></span>;		<span class="comment">//p2指向值为3.14的float</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：接收指针参数的构造函数是explicit的，即只能直接初始化。</p>
-<p><code>shared_ptr&lt;int&gt; p = new int(1024);         //错误！</code></p>
-<p><code>shared_ptr&lt;int&gt; p2(new int(1024));        //正确！使用直接初始化</code></p>
-<p>智能指针的优势：</p>
-<p>1.程序不知道自己需要多少对象</p>
-<p>2.程序不知道对象的准确类型</p>
-<p>3.程序需要在多个对象间共享数据</p>
-<p>（未完，先写这么多）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/10/20/C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" data-id="ckh7jzktj0004ucl5boaccbzy" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-  </nav>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/09/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/">[C++]类成员函数指针</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/12/C-Initialization/">[C++] Initialization</a>
-          </li>
-        
-          <li>
-            <a href="/2020/02/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/">[C++]头文件的作用(4)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/">[C++]链接器(Linker)是如何工作的(3)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/">[C++]#include和#define到底干了什么(2)</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
 </footer>
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+    <!-- toc -->
     
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 14
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/12</span><a class="archive-post-title" href= "/2020/09/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" >[C++]类成员函数指针</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/C-Initialization/" >[C++] Initialization</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/03</span><a class="archive-post-title" href= "/2020/02/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/" >[C++]头文件的作用(4)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" >[C++]链接器(Linker)是如何工作的(3)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/23</span><a class="archive-post-title" href= "/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" >[C++]#include和#define到底干了什么(2)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/18</span><a class="archive-post-title" href= "/2020/01/18/C-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" >C++是如何工作的(1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/15</span><a class="archive-post-title" href= "/2020/01/15/OpenGL-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" >[OpenGL] 环境配置</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2019/11/24/UE4-C-%E8%8E%B7%E5%8F%96%E8%A7%92%E8%89%B2%E5%8A%A8%E7%94%BB%E7%8A%B6%E6%80%81%E6%9C%BA/" >[UE4]C++获取角色动画状态机</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2019/11/14/UE4-%E5%B0%84%E7%BA%BF%E6%A3%80%E6%B5%8B/" >[UE4]射线检测与绘制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2019/10/20/C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" >[C++]智能指针</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2019/10/20/UE4-C-%E8%8E%B7%E5%8F%96%E5%9C%BA%E6%99%AF%E9%87%8C%E7%9A%84%E5%90%8E%E6%9C%9F%E7%9B%92%E5%AD%90/" >[UE4]C++获取场景里的后期盒子</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2019/10/13/UE4-%E6%A0%B9%E6%8D%AE%E6%9E%9A%E4%B8%BE%E5%80%BC%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" >[UE4]根据枚举值获取字符串(反过来获取也可以)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2019/10/12/UE4-%E5%86%99%E5%85%A5Json%E6%96%87%E4%BB%B6/" >[UE4]写入Json文件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2019/10/10/UE4-%E8%AF%BB%E5%8F%96Json%E6%96%87%E4%BB%B6/" >[UE4]读取Json文件</a>
+        </li>
+    
+    </div>
   </div>
-</body>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "John Doe"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+     
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/Bronya.model.json"},"display":{"superSample":2,"width":450,"height":900,"position":"left","hOffset":-100,"vOffset":-200},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"tagMode":false});</script></body>
 </html>
+
+

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>[C++]#include和#define到底干了什么(2) | C++&amp;UE4</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#include实际上就是将目标文件里面的所有内容复制粘贴到写#include的那个地方。 创建两个文件来说明，一个是.h文件，一个是.cpp文件,如图：   然后在Math.cpp文件中写如下函数： 1234int Multiply(int a, int b) &amp;#123;    return a * b;&amp;#125;  然后调用此函数，main.cpp文件内容如下： 12345678#incl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[C++]#include和#define到底干了什么(2)">
+<meta property="og:url" content="http://example.com/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/index.html">
+<meta property="og:site_name" content="C++&amp;UE4">
+<meta property="og:description" content="#include实际上就是将目标文件里面的所有内容复制粘贴到写#include的那个地方。 创建两个文件来说明，一个是.h文件，一个是.cpp文件,如图：   然后在Math.cpp文件中写如下函数： 1234int Multiply(int a, int b) &amp;#123;    return a * b;&amp;#125;  然后调用此函数，main.cpp文件内容如下： 12345678#incl">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-23T04:44:41.000Z">
+<meta property="article:modified_time" content="2020-02-13T07:45:27.425Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="C++&amp;UE4" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">C++&amp;UE4</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-C-include和-define到底干了什么" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" class="article-date">
+  <time datetime="2020-01-23T04:44:41.000Z" itemprop="datePublished">2020-01-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [C++]#include和#define到底干了什么(2)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#include实际上就是将目标文件里面的所有内容复制粘贴到写#include的那个地方。</p>
+<p>创建两个文件来说明，一个是<code>.h</code>文件，一个是.cpp文件,如图：</p>
+
+
+<p>然后在<code>Math.cpp</code>文件中写如下函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后调用此函数，<code>main.cpp</code>文件内容如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; Multiply(<span class="number">3</span>, <span class="number">4</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>F5运行后可以看到控制台输出：<code>12</code></p>
+<p>然后将<code>Math.cpp</code>修改一下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line"><span class="comment">//故意不写 &#125; 用头文件引入一个 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这时候编译会报错那是肯定的，但是我们可以玩一个花招。</p>
+<p>在<code>EndBrace.h</code>文件内容(删掉<code>#pragma once</code>)：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就写一个分号，然后再次修改<code>Math.cpp</code>文件中的函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;EndBrace.h&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>把刚才在<code>EndBrace.h</code>头文件中写的分号引入过来，正如文章开头所说的 —— #include实际上就是将目标文件里面的所有内容复制粘贴到<strong>写#include的那个地方</strong>。</p>
+<p>然后再次编译，可以看到没有任何报错，控制台正常打印：</p>
+
+
+
+
+<p>现在应该明白#include的基本工作内容了。不过继续往下探索！因为有一个办法可以让编译器输出一个文档，里面包含预处理(preprocesson)后的结果。</p>
+<p>右键项目，选择“属性”，如图：</p>
+
+
+
+
+<p>然后在”C/C++”栏位下面的”预处理器”将”预处理到文件”改为”是”,如图所示：</p>
+
+
+
+
+<p>设置完成后单独编译<code>Math.cpp</code>文件，编译成功后，在项目文件夹的Debug文件夹中，可以看到一个<code>Math.i</code>的文件。</p>
+<p>然后用<code>notepad++</code>打开，可以看到如下内容：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">line</span> 1 <span class="meta-string">&quot;c:\\users\\administrator\\source\\repos\\c++练习\\c++练习\\math.cpp&quot;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">line</span> 1 <span class="meta-string">&quot;c:\\users\\administrator\\source\\repos\\c++练习\\c++练习\\endbrace.h&quot;</span>	<span class="comment">//头文件</span></span></span><br><span class="line">&#125;	<span class="comment">//头文件中的内容添加到这里了。也就是一个花括号</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">line</span> 5 <span class="meta-string">&quot;c:\\users\\administrator\\source\\repos\\c++练习\\c++练习\\math.cpp&quot;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到通过<code>#include</code>确实的引入了一个花括号。 没错，<code>#include</code>就是如此简单。</p>
+<hr>
+<p>现在再来看看<code>#define</code>到底干了什么吧！</p>
+<p>修改<code>Math.cpp</code>文件内容：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INTEGER int</span></span><br><span class="line"></span><br><span class="line"><span class="function">INTEGER <span class="title">Multiply</span><span class="params">(INTEGER a, INTEGER b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>#define</code>的意思就是在此<code>cpp</code>文件内，将所有的<code>INTEGER</code>替换成<code>int</code>。</p>
+<p>编译后，再看看<code>Math.i</code>文件：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">line</span> 1 <span class="meta-string">&quot;c:\\users\\administrator\\source\\repos\\c++练习\\c++练习\\math.cpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Multiply</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到所有的<code>INTEGER</code>都替换成了<code>int</code>。</p>
+<p>注意：调试完毕后记得把”C/C++”栏位下面的”预处理器”将”预处理到文件”改为”否”。因为这样就不能产出<code>obj</code>文件了，前面说过，<code>obj</code>文件会被链接器链接成<code>.exe</code>文件，才可以执行。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" data-id="ckh7jzktc0001ucl5bhv74ms3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [C++]链接器(Linker)是如何工作的(3)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/18/C-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">C++是如何工作的(1)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/">[C++]类成员函数指针</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/12/C-Initialization/">[C++] Initialization</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/">[C++]头文件的作用(4)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/">[C++]链接器(Linker)是如何工作的(3)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/">[C++]#include和#define到底干了什么(2)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

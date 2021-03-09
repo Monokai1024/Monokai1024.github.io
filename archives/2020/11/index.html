@@ -346,20 +346,73 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/13/UE4-%E6%A0%B9%E6%8D%AE%E6%9E%9A%E4%B8%BE%E5%80%BC%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" >
+        <a class="abstract-title" href = "/2020/11/24/UE4-C-%E8%8E%B7%E5%8F%96%E8%A7%92%E8%89%B2%E5%8A%A8%E7%94%BB%E7%8A%B6%E6%80%81%E6%9C%BA/" >
             
-                <span>[UE4]根据枚举值获取字符串(反过来获取也可以)</span>
+                <span>[UE4]C++获取角色动画状态机</span>
         </a>
         <div class="abstract-content">
-            根据枚举值获取字符串。前提是这个枚举写了UENUM()的宏，原理是利用反射机制。
-枚举定义：
-实现方式如下：
-12345678910111213template&lt;class TEunm&gt;FString MyClass::GetEnumValueAsString(const FString &amp;name, const TEnum &amp;value)&#123;	const UEnum *enumPtr = FindObejct&lt;UEnum&gt;(ANY_PACKAGE,*name,true);    if(enumPtr)    &#123;    	retu...
+            比如我在PlayerCharacter类里获取状态机,要先获取动画蓝图实例:
+1234UAnimInstance *animInstance = GetMesh()-&gt;GetAnimInstance();FAnimNode_StateMachine* BaseStateMachine =     animInstance-&gt;GetStateMachineInstanceFromName(FName(&quot;PlayerStateMachine&quot;));
+
+
+
+如果在动画蓝图李获取状态机, 直接调用就行:
+1FAnimNode_StateMachine* BaseS...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/13</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/24</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/11/14/UE4-%E5%B0%84%E7%BA%BF%E6%A3%80%E6%B5%8B/" >
+            
+                <span>[UE4]射线检测与绘制</span>
+        </a>
+        <div class="abstract-content">
+            myCharacter是角色类，cameraComponent是角色类创建出来的摄像机组件
+12345678910111213141516171819202122232425262728//定义射线需要的起始点与终点Fvector cameraLocation = myCharacter-&gt;cameraComponent-&gt;K2_GetComponentLocation();Fvector startPos = cameraLocation + myCharacter-&gt;cameraComponent-&gt;GetForwardVector() * 300.f;Fve...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/14</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/11/12/C-Initialization/" >
+            
+                <span>[C++] Initialization</span>
+        </a>
+        <div class="abstract-content">
+            C++11提出了Unifrom Initialization(一致性初始化)的概念，也就是可以用”{ }”这种大括号的形式进行初始化，这种类型是一个类模板，名为：initializer_list&lt;&gt;
+可能知识比较零散，所以在文末进行了总结。
+为了介绍此语法，写出如下简单代码示例(iostream头文件和std命名空间省略不写)：
+1234567891011...class Data&#123;public:    Data() = default; 	//C++11新关键字，表示默认构造函数    Data(int a, int b) : v1(a), v2(b) &#123...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/12</span>
             </div>
             <!-- tags  -->
             

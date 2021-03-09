@@ -346,20 +346,23 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/13/UE4-%E6%A0%B9%E6%8D%AE%E6%9E%9A%E4%B8%BE%E5%80%BC%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" >
+        <a class="abstract-title" href = "/2021/03/09/UE4-%E5%9C%A8C-%E4%B8%AD%E4%BD%BF%E7%94%A8Timeline/" >
             
-                <span>[UE4]根据枚举值获取字符串(反过来获取也可以)</span>
+                <span>[UE4]在C++中使用Timeline</span>
         </a>
         <div class="abstract-content">
-            根据枚举值获取字符串。前提是这个枚举写了UENUM()的宏，原理是利用反射机制。
-枚举定义：
-实现方式如下：
-12345678910111213template&lt;class TEunm&gt;FString MyClass::GetEnumValueAsString(const FString &amp;name, const TEnum &amp;value)&#123;	const UEnum *enumPtr = FindObejct&lt;UEnum&gt;(ANY_PACKAGE,*name,true);    if(enumPtr)    &#123;    	retu...
+            首先, 在构造函数中获取timeline要使用到的曲线:
+123456//在构造函数中获取资源APIstatic ConstructorHelpers::FObjectFinder&lt;UCurveFloat&gt; curveRes    (TEXT(&quot;CurveFloat&#x27;/Game/LightSwordCurve.LightSwordCurve&#x27;&quot;));    //为方便阅读, 将成员都写在CPP文件里UCurveFloat* timelineCuve = curveRes.Object;
+
+
+
+实现timeline要用到的回调函数:
+12...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/13</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/09</span>
             </div>
             <!-- tags  -->
             

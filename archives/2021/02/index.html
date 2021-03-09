@@ -346,20 +346,22 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/12/C-Initialization/" >
+        <a class="abstract-title" href = "/2021/02/09/UE4%E5%A7%94%E6%89%98%E7%9A%84%E4%BD%BF%E7%94%A8/" >
             
-                <span>[C++] Initialization</span>
+                <span>UE4委托Delegate的使用</span>
         </a>
         <div class="abstract-content">
-            C++11提出了Unifrom Initialization(一致性初始化)的概念，也就是可以用”{ }”这种大括号的形式进行初始化，这种类型是一个类模板，名为：initializer_list&lt;&gt;
-可能知识比较零散，所以在文末进行了总结。
-为了介绍此语法，写出如下简单代码示例(iostream头文件和std命名空间省略不写)：
-1234567891011...class Data&#123;public:    Data() = default; 	//C++11新关键字，表示默认构造函数    Data(int a, int b) : v1(a), v2(b) &#123...
+            委托Delegate就像函数指针，但比函数指针易用安全很多。通常作为解耦合使用。
+首先在所有作用于之外声明：
+12345678//无参委托DECLARE_DELEGATE(FDelagate1);//一个参数的委托, 参数为int类型DECLARE_DELEGATE_OneParam(FDelagate2, int);	// 两个参数的委托, 参数为 bool类型和FText类型DECLARE_DELEGATE_TwoParams(FDelagate3,bool,FText);
+
+然后在类中声明委托类型的对象.
+123FDelagate1 d0;FDelagate2 d1;FDelaga...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/12</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/02/09</span>
             </div>
             <!-- tags  -->
             
@@ -598,9 +600,41 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 14
+        Total : 16
         </div>
         <!-- search  -->
         
@@ -611,42 +645,91 @@
     
     
     
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/09</span><a class="archive-post-title" href= "/2021/03/09/UE4-%E5%9C%A8C-%E4%B8%AD%E4%BD%BF%E7%94%A8Timeline/" >[UE4]在C++中使用Timeline</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/09</span><a class="archive-post-title" href= "/2021/02/09/UE4%E5%A7%94%E6%89%98%E7%9A%84%E4%BD%BF%E7%94%A8/" >UE4委托Delegate的使用</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/12</span><a class="archive-post-title" href= "/2020/09/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" >[C++]类成员函数指针</a>
+            <span class="archive-post-date">12/28</span><a class="archive-post-title" href= "/2020/12/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" >[C++]链接器(Linker)是如何工作的(3)</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/C-Initialization/" >[C++] Initialization</a>
+            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2020/12/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" >[C++]#include和#define到底干了什么(2)</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/03</span><a class="archive-post-title" href= "/2020/02/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/" >[C++]头文件的作用(4)</a>
+            <span class="archive-post-date">12/20</span><a class="archive-post-title" href= "/2020/12/20/C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" >[C++]智能指针</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2020/01/28/C-%E9%93%BE%E6%8E%A5%E5%99%A8-Linker-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" >[C++]链接器(Linker)是如何工作的(3)</a>
+            <span class="archive-post-date">12/18</span><a class="archive-post-title" href= "/2020/12/18/C-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" >C++是如何工作的(1)</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/23</span><a class="archive-post-title" href= "/2020/01/23/C-include%E5%92%8C-define%E5%88%B0%E5%BA%95%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" >[C++]#include和#define到底干了什么(2)</a>
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2020/12/12/C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" >[C++]类成员函数指针</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/18</span><a class="archive-post-title" href= "/2020/01/18/C-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" >C++是如何工作的(1)</a>
+            <span class="archive-post-date">12/03</span><a class="archive-post-title" href= "/2020/12/03/C-%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8/" >[C++]头文件的作用(4)</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/15</span><a class="archive-post-title" href= "/2020/01/15/OpenGL-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" >[OpenGL] 环境配置</a>
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2020/11/24/UE4-C-%E8%8E%B7%E5%8F%96%E8%A7%92%E8%89%B2%E5%8A%A8%E7%94%BB%E7%8A%B6%E6%80%81%E6%9C%BA/" >[UE4]C++获取角色动画状态机</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2020/11/14/UE4-%E5%B0%84%E7%BA%BF%E6%A3%80%E6%B5%8B/" >[UE4]射线检测与绘制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/12</span><a class="archive-post-title" href= "/2020/11/12/C-Initialization/" >[C++] Initialization</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/UE4-C-%E8%8E%B7%E5%8F%96%E5%9C%BA%E6%99%AF%E9%87%8C%E7%9A%84%E5%90%8E%E6%9C%9F%E7%9B%92%E5%AD%90/" >[UE4]C++获取场景里的后期盒子</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2020/10/12/UE4-%E5%86%99%E5%85%A5Json%E6%96%87%E4%BB%B6/" >[UE4]写入Json文件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/UE4-%E8%AF%BB%E5%8F%96Json%E6%96%87%E4%BB%B6/" >[UE4]读取Json文件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/13</span><a class="archive-post-title" href= "/2020/02/13/UE4-%E6%A0%B9%E6%8D%AE%E6%9E%9A%E4%B8%BE%E5%80%BC%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" >[UE4]根据枚举值获取字符串(反过来获取也可以)</a>
         </li>
     
     
@@ -660,37 +743,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2019/11/24/UE4-C-%E8%8E%B7%E5%8F%96%E8%A7%92%E8%89%B2%E5%8A%A8%E7%94%BB%E7%8A%B6%E6%80%81%E6%9C%BA/" >[UE4]C++获取角色动画状态机</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2019/11/14/UE4-%E5%B0%84%E7%BA%BF%E6%A3%80%E6%B5%8B/" >[UE4]射线检测与绘制</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2019/10/20/C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" >[C++]智能指针</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2019/10/20/UE4-C-%E8%8E%B7%E5%8F%96%E5%9C%BA%E6%99%AF%E9%87%8C%E7%9A%84%E5%90%8E%E6%9C%9F%E7%9B%92%E5%AD%90/" >[UE4]C++获取场景里的后期盒子</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2019/10/13/UE4-%E6%A0%B9%E6%8D%AE%E6%9E%9A%E4%B8%BE%E5%80%BC%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" >[UE4]根据枚举值获取字符串(反过来获取也可以)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2019/10/12/UE4-%E5%86%99%E5%85%A5Json%E6%96%87%E4%BB%B6/" >[UE4]写入Json文件</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2019/10/10/UE4-%E8%AF%BB%E5%8F%96Json%E6%96%87%E4%BB%B6/" >[UE4]读取Json文件</a>
+            <span class="archive-post-date">12/15</span><a class="archive-post-title" href= "/2019/12/15/OpenGL-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" >[OpenGL] 环境配置</a>
         </li>
     
     </div>

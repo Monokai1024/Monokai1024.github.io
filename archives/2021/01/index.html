@@ -346,7 +346,36 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2021/02/09/UE4%E5%A7%94%E6%89%98%E7%9A%84%E4%BD%BF%E7%94%A8/" >
+        <a class="abstract-title" href = "/2021/01/09/UE4-%E5%9C%A8C-%E4%B8%AD%E4%BD%BF%E7%94%A8Timeline/" >
+            
+                <span>UE4在C++中使用Timeline</span>
+        </a>
+        <div class="abstract-content">
+            首先, 在构造函数中获取timeline要使用到的曲线:
+123456//在构造函数中获取资源APIstatic ConstructorHelpers::FObjectFinder&lt;UCurveFloat&gt; curveRes    (TEXT(&quot;CurveFloat&#x27;/Game/LightSwordCurve.LightSwordCurve&#x27;&quot;));    //为方便阅读, 将成员都写在CPP文件里UCurveFloat* timelineCuve = curveRes.Object;
+
+
+
+实现timeline要用到的回调函数:
+12...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/01/09</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/01/01/UE4%E5%A7%94%E6%89%98%E7%9A%84%E4%BD%BF%E7%94%A8/" >
             
                 <span>UE4委托Delegate的使用</span>
         </a>
@@ -361,7 +390,7 @@
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/02/09</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/01/01</span>
             </div>
             <!-- tags  -->
             
@@ -648,12 +677,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/09</span><a class="archive-post-title" href= "/2021/03/09/UE4-%E5%9C%A8C-%E4%B8%AD%E4%BD%BF%E7%94%A8Timeline/" >UE4在C++中使用Timeline</a>
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2021/01/09/UE4-%E5%9C%A8C-%E4%B8%AD%E4%BD%BF%E7%94%A8Timeline/" >UE4在C++中使用Timeline</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/09</span><a class="archive-post-title" href= "/2021/02/09/UE4%E5%A7%94%E6%89%98%E7%9A%84%E4%BD%BF%E7%94%A8/" >UE4委托Delegate的使用</a>
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2021/01/01/UE4%E5%A7%94%E6%89%98%E7%9A%84%E4%BD%BF%E7%94%A8/" >UE4委托Delegate的使用</a>
         </li>
     
     
